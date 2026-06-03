@@ -141,7 +141,20 @@
 
 - Emissions data for stationary sources from four EPA air programs: National Emissions Inventory (NEI), Greenhouse Gas Reporting Program (GHGRP), Toxics Release Inventory (TRI), and Clean Air Markets (CAMD). 
 - Emissions presented as facility-level aggregates and organized by pollutant and EPA program.
-- Uses FRS code. 
+- **Panel.** Facility–pollutant–program–year combinations. GHG data begins 2010; CAMD/TRI from 2008; NEI is triennial (2008, 2011, 2014, etc.).
+- Joins to ICIS-Air via `REGISTRY_ID` (FRS code).
+- **Key fields:**
+    - `REPORTING_YEAR` — calendar year of the emission report. Frequency varies by program: CAMD, TRI, and GHG report annually; NEI is triennial.
+    - `REGISTRY_ID` — Facility Registry Service ID. The join key to other EPA datasets including ICIS-Air Facilities.
+    - `PGM_SYS_ACRNM` — which EPA program the emission data comes from:
+        - `EIS` = NEI (National Emissions Inventory) | `E-GGRT` = GHGRP (Greenhouse Gas Reporting Program) | `TRIS` = TRI (Toxics Release Inventory) | `CAMDBS` = CAMD (Clean Air Markets Division)
+    - `PGM_SYS_ID` — program-specific facility identifier. Format varies: 7-digit for NEI/GHGRP, 15-character for TRI, 4-digit for CAMD.
+    - `POLLUTANT_NAME` — name of the tracked pollutant.
+    - `ANNUAL_EMISSION` — pollutant emission value for the facility and year.
+    - `UNIT_OF_MEASURE` — measurement units. Pounds for TRI/NEI/CAMD; metric tons CO2-equivalent per year (MTCO2e/yr) for GHG.
+    - `NEI_TYPE` — pollutant category:
+        - `CAP` = Criteria Air Pollutant | `GHG` = Greenhouse Gas | `HAP` = Hazardous Air Pollutant | `OTH` = Other
+    - `NEI_HAP_VOC_FLAG` — "HAP-VOC" indicates the pollutant is a volatile organic compound classified as hazardous.
 
 > https://echo.epa.gov/tools/data-downloads/air-emissions-download-summary
 
