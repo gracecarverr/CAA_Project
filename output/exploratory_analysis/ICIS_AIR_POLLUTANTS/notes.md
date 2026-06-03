@@ -2,7 +2,7 @@
 
 Explored the facility-pollutant table. Cross-sectional: one row per facility-pollutant combination, no time dimension.
 
-## What we checked
+## What I checked
 
 - **Missingness** — coverage by column
 - **Unique pollutants** — full list of distinct pollutants in the data
