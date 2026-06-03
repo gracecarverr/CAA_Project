@@ -1,4 +1,4 @@
-### Information about Air Stationary Source Data
+# Information about Air Stationary Source Data
 
 ## ICIS-Air Datasets
 
@@ -12,33 +12,31 @@
 
  > https://echo.epa.gov/tools/data-downloads/icis-air-download-summary
 
-# Facility/Source Level Identifying Data (ICIS-AIR_FACILITIES.csv)
+### Facility/Source Level Identifying Data (ICIS-AIR_FACILITIES.csv)
 
-# Air Programs (ICIS-AIR_PROGRAMS.csv)
+### Air Programs (ICIS-AIR_PROGRAMS.csv)
 
-# Air Program Subparts (ICIS-AIR_PROGRAM_SUBPARTS.csv)
+### Air Program Subparts (ICIS-AIR_PROGRAM_SUBPARTS.csv)
 
-# Air Pollutants (ICIS-AIR_POLLUTANTS.csv)
+### Air Pollutants (ICIS-AIR_POLLUTANTS.csv)
 
-# Air Full Compliance Evaluations (FCEs) and Partial Compliance Evaluations (ECEs)
+### Air Full Compliance Evaluations (FCEs) and Partial Compliance Evaluations (ECEs)
 
-# Air Stack Tests (ICIS-AIR_STACK_TESTS.csv) 
+### Air Stack Tests (ICIS-AIR_STACK_TESTS.csv) 
 
-# Air Title V Certifications (ICIS-AIR_TITLEV_CERTS.csv)
+### Air Title V Certifications (ICIS-AIR_TITLEV_CERTS.csv)
 
-# ICIS-Air Formal Actions (ICIS-AIR_FORMAL_ACTIONS.csv)
+### ICIS-Air Formal Actions (ICIS-AIR_FORMAL_ACTIONS.csv)
 
-# ICIS-Air Informal Actions (ICIS-AIR_INFORMAL_ACTIONS.csv)
+### ICIS-Air Informal Actions (ICIS-AIR_INFORMAL_ACTIONS.csv)
 
-# Case File High Priority Violations (HPVs) and Federally Reportable Violations (FRVs) (ICIS-AIR_VIOLATION_HISTORY.csv)
+### Case File High Priority Violations (HPVs) and Federally Reportable Violations (FRVs) (ICIS-AIR_VIOLATION_HISTORY.csv)
 
-## Air Emissions Download Summary
+## Air Emissions Download Summary (POLL_RPT_COMBINED_EMISSIONS.csv)
 
 - Emissions data for stationary sources from four EPA air programs: National Emissions Inventory (NEI), Greenhouse Gas Reporting Program (GHGRP), Toxics Release Inventory (TRI), and Clean Air Markets (CAMD). 
 - Emissions presented as facility-level aggregates and organized by pollutant and EPA program.
 - Uses FRS code. 
-
-# POLL_RPT_COMBINED_EMISSIONS.csv 
 
 > https://echo.epa.gov/tools/data-downloads/air-emissions-download-summary
 
