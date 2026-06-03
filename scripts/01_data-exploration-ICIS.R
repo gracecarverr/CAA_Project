@@ -171,3 +171,48 @@ vh_by_agency <- ICIS_AIR_VIOLATION_HISTORY |>
   count(AGENCY_TYPE_DESC, name = "n_violations") |>
   arrange(desc(n_violations))
 write_csv(vh_by_agency, "output/exploratory_analysis/violations_by_agency.csv")
+
+# ---- ICIS_AIR_POLLUTANTS -------------------------------------------------------------------------------
+
+names(ICIS_AIR_POLLUTANTS)
+
+# Missingness
+poll_missingness <- data.frame(
+  variable = names(ICIS_AIR_POLLUTANTS),
+  n_missing = colSums(is.na(ICIS_AIR_POLLUTANTS)),
+  pct_missing = round(colSums(is.na(ICIS_AIR_POLLUTANTS)) / nrow(ICIS_AIR_POLLUTANTS) * 100, 2)
+)
+write_csv(poll_missingness, "output/exploratory_analysis/pollutants_missingness.csv")
+
+# Most common pollutants across facilities
+poll_by_frequency <- ICIS_AIR_POLLUTANTS |>
+  count(POLLUTANT_CODE, POLLUTANT_DESC, name = "n_facilities") |>
+  arrange(desc(n_facilities))
+write_csv(poll_by_frequency, "output/exploratory_analysis/pollutants_by_frequency.csv")
+
+# Pollutants per facility
+poll_per_facility <- ICIS_AIR_POLLUTANTS |>
+  count(PGM_SYS_ID, name = "n_pollutants") |>
+  summarise(
+    n_facilities = n(),
+    mean_pollutants = round(mean(n_pollutants), 2),
+    median_pollutants = median(n_pollutants),
+    max_pollutants = max(n_pollutants),
+    pct_single = round(mean(n_pollutants == 1) * 100, 2)
+  )
+write_csv(poll_per_facility, "output/exploratory_analysis/pollutants_per_facility.csv")
+
+# Emissions classification distribution
+poll_by_class <- ICIS_AIR_POLLUTANTS |>
+  count(AIR_POLLUTANT_CLASS_CODE, AIR_POLLUTANT_CLASS_DESC, name = "n_records") |>
+  arrange(desc(n_records))
+write_csv(poll_by_class, "output/exploratory_analysis/pollutants_by_class.csv")
+
+# CAS number coverage (useful for linking to health/tox data)
+poll_cas <- ICIS_AIR_POLLUTANTS |>
+  summarise(
+    n_total = n(),
+    n_with_cas = sum(!is.na(CHEMICAL_ABSTRACT_SERVICE_NMBR)),
+    pct_with_cas = round(mean(!is.na(CHEMICAL_ABSTRACT_SERVICE_NMBR)) * 100, 2)
+  )
+write_csv(poll_cas, "output/exploratory_analysis/pollutants_cas_coverage.csv")
