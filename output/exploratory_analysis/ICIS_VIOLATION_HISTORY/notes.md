@@ -15,7 +15,6 @@ Explored the HPV/FRV case file table. Event-level panel: multiple dated violatio
 ## Data quality issues
 
 - **Bad dates found.** Four records had impossible years (0218, 0217, 0014) due to data entry errors in the source data. Documented in `violations_bad_dates.csv` and converted to NA.
-- `mdy()` parsing is inconsistent on these malformed strings across runs — sometimes it parses them, sometimes it returns NA. Defensive cleaning (flag anything pre-1970 as NA) is necessary regardless.
 
 ## Key numbers
 
