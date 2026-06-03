@@ -1,0 +1,3 @@
+# Raw data — too large for GitHub; see data/raw/README.md for sources
+data/raw/*
+!data/raw/README.md
