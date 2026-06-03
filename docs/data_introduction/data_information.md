@@ -14,23 +14,53 @@
 
 ### Facility/Source Level Identifying Data (ICIS-AIR_FACILITIES.csv)
 
+- Name, address, county, state, EPA region, SIC/NAICS codes, operating status, and HPV status for each facility. Primary key: `PGM_SYS_ID`.
+- **Cross-section.** One row per facility; no time dimension.
+
 ### Air Programs (ICIS-AIR_PROGRAMS.csv)
+
+- Regulatory air programs each facility is subject to (e.g., Title V, NSPS, NESHAP), with program-level operating status and dates.
+- **Panel.** Multiple programs per facility, each with begin/updated dates.
 
 ### Air Program Subparts (ICIS-AIR_PROGRAM_SUBPARTS.csv)
 
+- Specific subpart requirements within each air program applicable to a facility.
+- **Cross-section.** Facility–program–subpart combinations; no time dimension.
+
 ### Air Pollutants (ICIS-AIR_POLLUTANTS.csv)
 
-### Air Full Compliance Evaluations (FCEs) and Partial Compliance Evaluations (ECEs)
+- Pollutants tracked at each facility, with pollutant codes, CAS numbers, and emissions classification (major/minor).
+- **Cross-section.** Facility–pollutant combinations; no time dimension.
+
+### Air Full Compliance Evaluations (FCEs) and Partial Compliance Evaluations (PCEs)
+
+- Records of on-site inspections and off-site compliance reviews, including responsible agency, date, and applicable programs.
+- **Event-level panel.** Multiple dated evaluations per facility over time.
 
 ### Air Stack Tests (ICIS-AIR_STACK_TESTS.csv) 
 
+- Stack test results by facility, including pollutants tested and pass/fail status.
+- **Event-level panel.** Multiple dated tests per facility over time.
+
 ### Air Title V Certifications (ICIS-AIR_TITLEV_CERTS.csv)
+
+- Annual Title V compliance certifications submitted by facilities, with deviation flags.
+- **Event-level panel.** Multiple dated certifications per facility over time.
 
 ### ICIS-Air Formal Actions (ICIS-AIR_FORMAL_ACTIONS.csv)
 
+- Formal enforcement actions (e.g., consent agreements, judicial orders) with settlement dates and penalty amounts.
+- **Event-level panel.** Multiple dated actions per facility over time.
+
 ### ICIS-Air Informal Actions (ICIS-AIR_INFORMAL_ACTIONS.csv)
 
+- Informal enforcement actions (e.g., notices of violation, warning letters) with dates achieved.
+- **Event-level panel.** Multiple dated actions per facility over time.
+
 ### Case File High Priority Violations (HPVs) and Federally Reportable Violations (FRVs) (ICIS-AIR_VIOLATION_HISTORY.csv)
+
+- HPV and FRV case file records tracking violation discovery, day-zero date, and resolution date by facility.
+- **Event-level panel.** Multiple dated violations per facility, with discovery-to-resolution timeline.
 
 ## Air Emissions Download Summary (POLL_RPT_COMBINED_EMISSIONS.csv)
 
