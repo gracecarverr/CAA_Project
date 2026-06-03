@@ -1,0 +1,8 @@
+AIR_OPERATING_STATUS_CODE,AIR_OPERATING_STATUS_DESC,n_facilities
+OPR,Operating,184040
+CLS,Permanently Closed,77065
+NA,NA,12467
+TMP,Temporarily Closed,4019
+PLN,Planned Facility,745
+CNS,Under Construction,548
+SEA,Seasonal,327
