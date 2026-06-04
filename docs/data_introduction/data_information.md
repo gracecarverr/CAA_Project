@@ -167,7 +167,12 @@
 
 ## CAA Pipeline Dataset
 
-- Shows links between Compliance Monitoring Activities (CMA) to any related violations and/or enforcement actions. 
+- Shows links between Compliance Monitoring Activities (CMA) to any related violations and/or enforcement actions.
+- "EPA's Enforcement and Compliance History Online (ECHO) website has implemented a new feature responding to frequent requests that Clean Air Act activities be presented showing associations between compliance monitoring, violations, and enforcement. Historically, ECHO organized data in the Detailed Facility Report (DFR) by activity type, listing compliance monitoring activities, violations, and formal and informal enforcement actions in separate tables. Now, an additional "pipeline view" will help users understand how Clean Air Act violations relate to compliance monitoring (i.e., what was the violation discovery activity?) and enforcement (i.e., what violations did enforcement actions address?)."
+
+> https://www.fedcenter.gov/Announcements/index.cfm?id=42737&pge_id=1854&printable=1
+
+To see this new view, navigate to the Enforcement and Compliance section of a Detailed Facility Report for any Clean Air Act permitted facility with past or current violations.
 
 > https://echo.epa.gov/tools/data-downloads/caa-pipeline-download-summary
 

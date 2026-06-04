@@ -12,7 +12,7 @@ Explored base identification table. One row per facility, no time dimension.
 
 ## Key numbers
 
-- **279,211 facilities** total.
+- **265,490 facilities** total.
 - **Top states:** CO (32,397), IL (28,445), OK (18,359), LA (13,834), NY (12,623).
 - **Emissions classification:** 196,214 minor (70%), 37,446 synthetic minor (13%), 19,078 major (7%). 15,379 missing (5.5%).
 - **Operating status:** 184,040 operating (66%), 77,065 permanently closed (28%). 12,467 missing (4.5%).
