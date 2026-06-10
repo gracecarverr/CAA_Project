@@ -1,0 +1,668 @@
+POLLUTANT_CODE,POLLUTANT_DESC,n,pct
+300000329,FACIL,141981,14.5
+300000243,VOLATILE ORGANIC COMPOUNDS (VOCS),131325,13.4
+300000322,TOTAL PARTICULATE MATTER,86845,8.9
+10193,Carbon monoxide,77117,7.9
+300000005,NITROGEN OXIDES NO2,74906,7.7
+300000319,PARTICULATE MATTER < 10 UM,65125,6.7
+10461,Sulfur dioxide,54225,5.6
+300000242,TOTAL HAZARDOUS AIR POLLUTANTS (HAPS),49640,5.1
+300000207,Formaldehyde,26241,2.7
+300000330,OTHER,13140,1.3
+300000320,PARTICULATE MATTER < 2.5 UM,12613,1.3
+300000282,NITROGEN OXIDES,11651,1.2
+300000236,VISIBLE EMISSIONS,11177,1.1
+300000240,CFC (CHLOROFLUOROCARBONS),10584,1.1
+300000183,Benzene,10409,1.1
+300000074,Tetrachloroethylene,9721,1
+300000097,Toluene,9557,1
+300000328,ADMIN,9334,1
+300000323,POLLUTANT X,9288,1
+300000048,Xylene,8602,0.9
+10373,Particulate matter - PM10,8345,0.9
+10358,Nitrogen oxides,7560,0.8
+300000094,Hexane,7204,0.7
+300000120,Ethylbenzene,6944,0.7
+300000038,Lead,6330,0.6
+7003,Particulate matter,6234,0.6
+200000481,Particulate Matter - PM2.5,5520,0.6
+300000010,Hydrogen sulfide,3987,0.4
+300000188,Methanol,3678,0.4
+300000305,TOTAL HYDROCARBONS,3533,0.4
+300000107,Acrolein,2613,0.3
+300000377,PM10 (Filterable portion only),2547,0.3
+300000269,"2,2,4-Trimethylpentane",2531,0.3
+300000047,ASBESTOS,2482,0.3
+300000210,Chromium compounds,2214,0.2
+300000018,Hydrochloric acid,2117,0.2
+300000173,Acetaldehyde (duplicate pollutant),2114,0.2
+300000138,Naphthalene,2062,0.2
+300000006,NITROGEN OXIDES NO,1831,0.2
+300000333,Acetaldehyde,1779,0.2
+300000076,Carbon dioxide,1765,0.2
+300000119,Styrene,1751,0.2
+300000108,"1,3-Butadiene",1514,0.2
+300000153,Methyl ethyl ketone,1394,0.1
+300000213,Carbon Dioxide-Equivalents,1226,0.1
+300000036,Mercury,1161,0.1
+300000101,Methyl isobutyl ketone,1156,0.1
+300000302,FUGITIVE EMISSIONS,1132,0.1
+5409,Total hazardous air pollutants,1122,0.1
+300000228,Nickel compounds,1103,0.1
+300000226,MANGANESE & MANGANESE COMPOUNDS,1093,0.1
+300000124,Cumene,1066,0.1
+300000016,Ammonia,1049,0.1
+300000095,Phenol,989,0.1
+300000314,FINE PARTICULATES: HIGH PROBABILITY OF VIOLATION,972,0.1
+300000218,CADMIUM COMPOUNDS,971,0.1
+300000171,Methylene chloride,945,0.1
+300000301,FUGITIVE DUST,932,0.1
+300000315,FINE PARTICULATES: LOW PROBABILITY OF VIOLATION,914,0.1
+300000215,ARSENIC COMPOUNDS,910,0.1
+300000180,Methane (Air),874,0.1
+300000007,NITROGEN OXIDES N2O ETC,853,0.1
+300000295,AROMATICS,827,0.1
+300000307,MERCURY COMPOUNDS,806,0.1
+300000291,METAL HAP,780,0.1
+300000015,Sulfuric acid,779,0.1
+300000012,Selenium,777,0.1
+10494,Volatile organic compounds,757,0.1
+300000017,Hydrofluoric acid,749,0.1
+300000321,POLYCYCLIC ORGANIC MATTER,742,0.1
+300000222,COLBALT COMPOUNDS,726,0.1
+300000011,Chlorine,691,0.1
+300000318,LEAD COMPOUNDS,671,0.1
+300000103,Ethylene glycol,642,0.1
+300000376,PM2.5 (Filterable portion only),626,0.1
+300000312,ODORS,613,0.1
+300000187,Acetone,611,0.1
+300000186,Chloroform,590,0.1
+300000111,p-Dichlorobenzene,584,0.1
+300000304,GLYCOL ETHERS (E651141),584,0.1
+300000182,"1,1,1-Trichloroethane",568,0.1
+300000174,Vinyl chloride,559,0.1
+300000135,Biphenyl,541,0.1
+300000234,NON-METHANE ORGANIC COMPOUNDS,532,0.1
+300000296,BERYLLIUM COMPOUNDS,519,0.1
+300000002,"Chromium, Hexavalent",503,0.1
+300000151,Trichloroethylene,500,0.1
+300000026,Beryllium,491,0.1
+300000203,Carbon tetrachloride,485,0
+300000037,Manganese,476,0
+300000145,Methyl methacrylate,450,0
+300000025,Cadmium,424,0
+300000289,TOTAL SUSPENDED PARTICULATE (PHYSICAL PROPERTY),409,0
+300000028,Arsenic,406,0
+300000096,Chlorobenzene,399,0
+300000237,Methyl tert-butyl ether,391,0
+300000238,Zinc compounds,384,0
+300000147,"1,1,2,2-Tetrachloroethane",370,0
+300000152,"1,1,2-Trichloroethane",370,0
+300000159,Propylene oxide,369,0
+300000035,Nickel,358,0
+300000177,Chloromethane,357,0
+300000109,Ethylene dibromide,347,0
+300000373,"Gasoline, natural",339,0
+200000601,GHG,332,0
+300000224,Lead compounds,331,0
+300000168,Ethylene oxide,326,0
+300000378,PM (Condensible portion),325,0
+300000179,Methyl bromide,315,0
+300000227,NICKEL & NICKEL COMPOUNDS,314,0
+300000349,Isopropanol,314,0
+300000105,"1,2-Dichloroethane",313,0
+300000132,o-Xylene,310,0
+300000366,Chromium[VI] trioxide,303,0
+300000102,Vinyl acetate,300,0
+300000331,Chromium,297,0
+300000027,Barium,284,0
+300000327,Primary PM10 (filterables and condensibles),283,0
+300000395,Cyclohexane,278,0
+300000277,HEXAMETHYLENE DIISOCYANATE,269,0
+300000232,Antimony compounds,266,0
+300000407,Chlorobenzene,263,0
+300000129,"1,2,4-Trimethylbenzene",262,0
+300000290,VOLATILE ORGANIC HAZARDOUS AIR POLLUTANT,260,0
+300000169,Carbon disulfide,258,0
+300000380,1-Butanol,258,0
+300000003,Sulfide,247,0
+300000090,Propylene,247,0
+300000057,"1,3-Dichloropropene",239,0
+300000223,Copper compounds,239,0
+300000178,Ethylene,232,0
+300000099,m-Xylene,227,0
+300000154,"1,2-Dichloropropane",210,0
+300000354,2-Methylnaphthalene,210,0
+300000004,Fluoride,208,0
+300000298,"CHLORINATED DIOXIN AND FURANS 2,3,7,8 CONGENERS ONLY (TEQ) (E17000407)",206,0
+300000104,Acrylonitrile,196,0
+300000175,Chloroethane,196,0
+300000013,Phosphorus,194,0
+300000143,Dibutyl phthalate,193,0
+300000166,"1,1-Dichloroethane",191,0
+10305,Hydrocarbons,183,0
+300000078,Propanal,177,0
+300000089,Di(2-ethylhexyl) phthalate,177,0
+300000123,Acetophenone,172,0
+300000030,Antimony,169,0
+300000221,COLBALT & COBALT COMPOUNDS,167,0
+300000231,REACTIVE ORGANIC COMPOUNDS,164,0
+200000241,NMHC + NOx [Non-Methane Hydrocarbons plus Nitrogen oxides],163,0
+300000085,Anthracene,162,0
+300000352,Fluorene,156,0
+300000480,Acenaphthene,156,0
+300000475,Fluoranthene,155,0
+300000478,Chrysene,153,0
+300000060,Carbonyl sulfide,152,0
+300000082,Triethylamine,152,0
+300000362,Pyrene,152,0
+300000009,Phosphine,148,0
+300000049,Cresol,145,0
+300000477,Acenaphthylene,145,0
+300000544,Benzo[b]fluoranthene,145,0
+300000518,Benz[a]anthracene,144,0
+300000014,Nitric acid,143,0
+300000073,Dimethyl phthalate,143,0
+300000346,Benzo[a]pyrene,143,0
+300000116,"4,4' - methylenedi (phenyl isocyanate)",141,0
+300000217,Barium compound,140,0
+300000474,"Indeno[1,2,3-cd]pyrene",137,0
+300000476,Benzo[k]fluoranthene,136,0
+300000093,Diethanolamine,133,0
+300000113,p-Xylene,133,0
+300000479,"Dibenz[a,h]anthracene",132,0
+300000149,Acrylic acid,125,0
+300000230,RADIONUCLIDES,124,0
+300000397,Sodium hydroxide,124,0
+300000326,Primary PM2.5 (filterables and condensibles),123,0
+300000189,Ethanol,121,0
+300000368,Cobalt,121,0
+300000077,"1,4-Dioxane",117,0
+300000045,Polychlorinated biphenyls,113,0
+300000172,Acetonitrile,112,0
+3670,SELENIUM COMPOUNDS,111,0
+200000842,HC + NOx [Hydrocarbons plus Nitrogen oxides],111,0
+300000155,Isophorone,110,0
+300000023,Zinc,107,0
+300000347,Cyanide,107,0
+300000370,Phosphoric acid,106,0
+300000165,"1,1-Dichloroethylene",105,0
+2092,HYDROGEN CHLORIDE,104,0
+300000416,Dichlorobenzene,99,0
+300000419,2-Butoxyethanol,99,0
+300000054,"Toluene-2,4-diisocyanate",98,0
+300000381,Heptane,95,0
+300000549,"7,12-Dimethylbenz[a]anthracene",95,0
+300000069,Ethyl acrylate,94,0
+300000024,Copper,93,0
+300000084,"1,2,4-Trichlorobenzene",92,0
+300000414,Pentane,89,0
+300000083,"2,4-Dinitrotoluene",87,0
+300000176,Hydrogen cyanide,87,0
+10361,Nonmethane hydrocarbons [NMHC],86,0
+300000294,ALDEHYDES,86,0
+300000042,"2,3,7,8-Tetrachlorodibenzo-p-dioxin",84,0
+300000140,Pentachlorophenol,84,0
+300000193,Aniline,82,0
+300000667,Light alkylate naphtha (petroleum),80,0
+300000110,Epichlorohydrin,79,0
+300000079,Hydroquinone,77,0
+300000412,n-Butyl acetate,75,0
+300000211,MALEIC ANHYDRIDE,72,0
+300000041,Sulfur hexafluoride,70,0
+300000121,p-Nitrophenol,70,0
+300000387,Ethyl acetate,70,0
+300000256,para-Quinone,69,0
+300000139,"2,4,6-Trichlorophenol",67,0
+300000311,ORGANIC ACIDS,67,0
+300000389,Benzyl alcohol,67,0
+300000184,"N,N-Dimethylformamide",66,0
+300000118,Benzyl chloride,64,0
+300000401,Isobutyraldehyde,64,0
+300000206,"2,4-Dinitrophenol",63,0
+300000072,Dibenzofuran,62,0
+300000250,Dimethyl Sulfate,59,0
+300000417,Acetic acid,55,0
+300000020,Sulfur trioxide,54,0
+300000310,NON-VOLATILE ORGANIC COMPOUNDS,54,0
+300000406,Isobutanol,54,0
+300000167,Tribromomethane,53,0
+300000039,Aluminum,51,0
+300000088,Hexachlorobenzene,51,0
+300000131,o-Cresol,50,0
+300000142,Phthalic anhydride,47,0
+300000268,2-Chloroacetophenone,47,0
+300000068,Sodium cyanide,46,0
+300000209,"Benzene, ethylbenzene, toluene, xylene combination",46,0
+300000001,"2,3,7,8-Tetrachlorodibenzofuran",45,0
+300000194,Methyl hydrazine,45,0
+300000247,Iodomethane,45,0
+300000122,Nitrobenzene,44,0
+300000066,Hydrazine,43,0
+300000386,"n-Octane, total",43,0
+300000425,Pyridine,43,0
+300000661,Butene,43,0
+300000422,Kerosene,42,0
+300000257,"1,2-Epoxybutane",41,0
+300000415,Sulfur,41,0
+320002821,Particulate Matter [Filterable],40,0
+300000141,Hexachlorobutadiene,39,0
+300000185,Hexachloroethane,38,0
+300000431,Aluminum oxide,38,0
+300000643,Naphtha,38,0
+300000668,Hydrotreated light distillates (petroleum),37,0
+4186,TOTAL REDUCED SULFUR,35,0
+300000106,Allyl chloride,34,0
+300000130,o-Toluidine,33,0
+300000384,Trimethylbenzene,33,0
+300000593,"Ethylene glycol monobutyl ether acetEthanol, 2-butoxy-, 1-acetate te",33,0
+300000644,Stoddard solvent,33,0
+320002801,PM (filterables),33,0
+300000150,Acrylamide,32,0
+300000208,Furans,32,0
+300000283,HAFNIUM CARBIDE,32,0
+300000680,Ozone,32,0
+300000351,Phenanthrene,31,0
+1305,CYANIDE COMPOUNDS,29,0
+300000075,Chloroprene,29,0
+300000245,Acetamide,29,0
+300000112,p-Cresol,28,0
+300000371,Bromine,28,0
+300000374,Chlorine dioxide,28,0
+300000399,Methyl acetate,28,0
+300000432,Isobutyl acetate,28,0
+300000595,4-Hydroxy-4-methyl-2-pentanone,28,0
+300000081,"N,N-Dimethylaniline",27,0
+300000098,m-Cresol,27,0
+300000388,SOLVENT NAPHTHA,27,0
+300000115,"4,4'-methylenedianiline",26,0
+300000137,Quinoline,26,0
+300000392,Cyclohexanone,26,0
+300000426,Diethylene Glycol,26,0
+300000163,Phosgene,25,0
+300000092,Bis(2-chloroethyl) ether,24,0
+300000350,Methyl mercaptan,24,0
+300000458,Molybdenum,24,0
+300000379,Butyl benzyl phthalate,23,0
+300000423,Butyraldehyde,23,0
+300000427,Asphalt,23,0
+300000146,2-Nitropropane,22,0
+300000156,Hexachlorocyclopentadiene,22,0
+300000363,Butyl acrylate,22,0
+300000369,Vanadium,22,0
+300000600,Cyclopentane,22,0
+300000589,Ethylene glycol dimethyl ether,21,0
+300000114,Caprolactam,20,0
+300000126,"1,2-Dibromo-3-chloropropane",20,0
+300000128,"2,4-Toluenediamine",20,0
+300000421,tert-Butanol,20,0
+300000430,Petroleum [Crude Oil],20,0
+300000468,"1,3,5-Trimethylbenzene",20,0
+300000616,Carbon black,20,0
+320002708,Total Halogens,20,0
+300000367,Silver,19,0
+300000402,Ethanolamine,19,0
+300000470,Dichlorobromomethane,19,0
+300000558,2-Butanol,19,0
+10339,HCFC-22 [Air],18,0
+300000019,Titanium tetrachloride,18,0
+300000134,Benzidine,18,0
+300000651,Titanium dioxide,18,0
+300000355,o-Dichlorobenzene,17,0
+300000573,1-Butene,17,0
+300000441,CFC-113,16,0
+300000444,2-Ethoxyethanol,16,0
+300000451,"Iron, ferrous",16,0
+300000462,Acetylene,16,0
+300000560,Cumene hydroperoxide,16,0
+300000348,Formic acid,15,0
+300000353,1-Methylnaphthalene,15,0
+300000404,CFC-12,15,0
+300000439,5-Methyl-2-hexanone,15,0
+300000440,Hydrogen peroxide,15,0
+300000191,N-Nitrosodimethylamine,14,0
+300000197,Lindane,14,0
+300000254,Styrene Oxide,14,0
+300000316,PARAFFINS (ALKANES),14,0
+300000438,Dimethyl sulfide,14,0
+300000677,Ethane,14,0
+300000127,"2,4,5-Trichlorophenol",13,0
+300000136,"3,3'-dichlorobenzidine",13,0
+300000634,Ammonium sulfate,13,0
+300000343,Hydrobromic acid,12,0
+300000382,Tetrahydrofuran,12,0
+300000383,Di-n-octyl phthalate,12,0
+300000428,2-Methoxyethanol,12,0
+300000485,Fluorine,12,0
+300000579,Acetic anhydride,12,0
+300000582,Methylcyclohexane,12,0
+200000841,Nonmethane organic gases [NMOG],11,0
+300000100,B3 PHENYLENEDIAMINE,11,0
+300000220,COKE OVEN EMISSION,11,0
+300000246,"Sulfuric acid, diethyl ester",11,0
+300000248,2-Methylpropane (Isobutane),11,0
+300000253,4-Nitrodiphenyl,11,0
+300000258,Methyl Chloromethyl Ether,11,0
+300000260,Catechol,11,0
+300000390,Dicyclopentadiene,11,0
+300000410,Ethylene glycol monopropyl ether,11,0
+300000446,Isoprene,11,0
+300000452,Ammonium nitrate,11,0
+300000456,"2,4-Dimethylphenol",11,0
+300000469,Chromic[VI] acid,11,0
+300000487,"trans-1,2-Dichloroethylene",11,0
+300000499,"Toluene-2,6-diisocyanate",11,0
+300000512,Diethylene glycol monobutyl ether,11,0
+300000645,Polyethylene,11,0
+300000654,Talc,11,0
+320002704,Total Organic Hazardous Air Pollutants,11,0
+300000046,Hydrogen,10,0
+300000229,Radionuclides (including radon),10,0
+300000271,Vinyl Bromide,10,0
+300000433,Isopropyl acetate,10,0
+300000460,4-Aminobiphenyl,10,0
+300000581,Diisobutyl ketone,10,0
+300000200,"1,1-Dimethylhydrazine",9,0
+300000205,Urethane,9,0
+300000249,2-Methylaziridine (propyleneimine),9,0
+300000396,"1,2-Dichloroethylene",9,0
+300000400,Dimethylamine,9,0
+300000473,CFC-11,9,0
+300000481,Tetrachloroethane,9,0
+300000679,Butane,9,0
+2510,Methyl chloroform,8,0
+4167,TOTAL ORGANIC COMPOUNDS,8,0
+300000133,"2,4-D",8,0
+300000144,Pentachloronitrobenzene,8,0
+300000148,Chloroacetic acid,8,0
+300000252,o-Anisidine,8,0
+300000255,Benzotrichloride,8,0
+300000293,ALUMINUM COMPOUNDS,8,0
+300000358,Propylene glycol 1-methyl ether,8,0
+300000398,2-Furanmethanol,8,0
+300000463,Toluenediamine,8,0
+300000471,Carbon,8,0
+300000498,n-Decane,8,0
+300000532,Chloride,8,0
+10343,Bis[chloromethyl] ether [Air],7,0
+300000157,Heptachlor,7,0
+300000308,KETONES,7,0
+300000337,Dibenzo-p-dioxin,7,0
+300000408,Magnesium oxide,7,0
+300000409,Sodium sulfate,7,0
+300000418,Calcium oxide,7,0
+300000424,Diethylenetriamine,7,0
+300000605,tert-Butyl acetate,7,0
+300000608,Zinc stearate,7,0
+300000609,Methyl isopropyl ketone,7,0
+300000058,"4,6-Dinitro-o-cresol",6,0
+300000067,Calcium cyanamide,6,0
+300000087,"3,3'-dimethoxybenzidine",6,0
+300000196,N-Nitrosomorpholine,6,0
+300000198,Chlordane,6,0
+300000334,Trimethylamine,6,0
+300000360,Dimethyl ether,6,0
+300000394,Propionic acid,6,0
+300000403,Propane,6,0
+300000411,HCFC-21,6,0
+300000448,Morpholine,6,0
+300000454,Benzoyl peroxide,6,0
+300000466,Diethyl phthalate,6,0
+300000467,Furfural,6,0
+300000559,Nitroethane,6,0
+300000565,Benzoyl chloride,6,0
+300000647,Polyethylene glycol nonylphenyl ether,6,0
+300000649,Mica group minerals,6,0
+320004361,n-Propyl Bromide,6,0
+12567,Propanal,5,0
+300000008,Toxaphene,5,0
+300000117,"4,4' - methylenebis (2 - chloroaniline)",5,0
+300000181,Methoxychlor,5,0
+300000195,4-Dimethylaminoazobenzene,5,0
+300000233,Sulfates,5,0
+300000262,Ethyleneimine,5,0
+300000385,Polyvinyl chloride,5,0
+300000393,Molybdenum trioxide,5,0
+300000435,"1,1,1,2-Tetrachloroethane",5,0
+300000509,Polymeric diphenylmethane diisocyanate,5,0
+300000511,Diethylene glycol monoethyl ether,5,0
+300000521,m-Dichlorobenzene,5,0
+300000522,Uranium-238,5,0
+300000621,Octachloronaphthalene,5,0
+300000658,Aluminum hydroxide,5,0
+300000659,Vinyltoluene,5,0
+300000675,Magnesium,5,0
+320002781,Reduced Sulfur Compounds,5,0
+2440,MDI,4,0
+6410,CHROMIUM TRIVALENT,4,0
+7838,"1,12-Benzoperylene",4,0
+300000033,Thallium,4,0
+300000080,"1,2-Diphenylhydrazine",4,0
+300000091,Propoxur,4,0
+300000272,Methyl Isocyanate,4,0
+300000292,ACETYLENES (ALKYNES),4,0
+300000303,FINE MINERAL FIBERS_(E649533),4,0
+300000309,MERCURY COMPOUNDS (E650028),4,0
+300000434,n-Amyl acetate,4,0
+300000465,Butyric acid,4,0
+300000492,Lead monoxide,4,0
+300000503,"4,4'-isopropylidenediphenol",4,0
+300000515,n-Dodecane,4,0
+300000552,Nitromethane,4,0
+300000567,Terephthalic acid,4,0
+300000580,1-Methoxy-2-propyl acetate,4,0
+300000639,Silane,4,0
+300000664,Isooctanol,4,0
+300000665,Diisononyl phthalate,4,0
+300000669,Light aliphatic solvent naphtha (petroleum),4,0
+300000678,1-Propanol,4,0
+320002702,Hydrochloric Acid-Equivalents,4,0
+2097,Hydrogen fluoride,3,0
+6414,DICHLORODIFLUOROMETHANE [CFC-12],3,0
+6419,HCFC [HYRDOCHLOROFLUOROCARBONS],3,0
+300000044,Trifluralin,3,0
+300000086,"3,3-dimethylbenzidine",3,0
+300000125,Ethylene thiourea,3,0
+300000278,PROPANE SULTONE,3,0
+300000306,HYDROFLUOROCARBONS,3,0
+300000391,Nitrilotriacetic acid,3,0
+300000405,Diethylamine,3,0
+300000420,Dinitrotoluene,3,0
+300000429,Potassium hydroxide,3,0
+300000436,2-Propen-1-ol,3,0
+300000447,Cyclohexylamine,3,0
+300000461,Ethinyl estradiol,3,0
+300000472,Tetraethyl lead,3,0
+300000489,Strontium,3,0
+300000494,Isopropyl ether,3,0
+300000495,Calcium,3,0
+300000497,Hexamethylenediamine,3,0
+300000502,Methacrylic acid,3,0
+300000506,Methyl ethyl ketone peroxide,3,0
+300000507,"trans-1,3-Dichloropropene",3,0
+300000510,Potassium,3,0
+300000543,2-Methylbutane,3,0
+300000551,Formamide,3,0
+300000575,Propargyl alcohol,3,0
+300000603,"1,3-Pentadiene",3,0
+300000610,Glycidylaldehyde,3,0
+300000618,m-Xylylenediamine,3,0
+300000619,Nitrofen,3,0
+300000625,Isophorone diisocyanate,3,0
+816,CARBON DIOXIDE LIQUID,2,0
+2509,Methyl chloride,2,0
+2787,Nitric acid,2,0
+2832,NITROGEN OXIDES NO2,2,0
+3214,PERCHLOETHYLENE,2,0
+10276,2-Butoxyethanol,2,0
+11257,"HFC-152a [1,1-difluoroethane]",2,0
+200000221,n-Propyl Bromide,2,0
+300000031,Titanium,2,0
+300000032,Tin,2,0
+300000070,Chloramben,2,0
+300000071,Captan,2,0
+300000190,Carbaryl,2,0
+300000201,Glycerine,2,0
+300000202,Parathion,2,0
+300000204,2-Acetylaminofluorene,2,0
+300000251,"n,n-Dimethylcarbamoyl Chloride",2,0
+300000261,trans-Crotonaldehyde,2,0
+300000263,Diazomethane,2,0
+300000267,HFC-245fa,2,0
+300000275,N-NITROSO-N-METHYLUREA,2,0
+300000279,DICHLORODIPHENYLDICHLOROETHYLENE,2,0
+300000288,PERFLUOROCARBONS,2,0
+300000297,BERYLLIUM COMPOUNDS (E649947),2,0
+300000341,"2-Propanamine, N,N-dimethyl-",2,0
+300000357,Methyl acrylate,2,0
+300000365,N-Methyl-2-pyrrolidone,2,0
+300000372,Nitrogen,2,0
+300000443,Diethylaminoethanol,2,0
+300000450,Chlorothalonil,2,0
+300000482,Boron,2,0
+300000484,Picric acid,2,0
+300000490,Zinc oxide,2,0
+300000491,Barium sulfate,2,0
+300000493,Wood creosote,2,0
+300000496,Trichlorobenzene,2,0
+300000517,Di[2-ethylhexyl] adipate,2,0
+300000519,Methyl formate,2,0
+300000523,Urea,2,0
+300000529,Oxalic acid,2,0
+300000530,Hydrotreated heavy naphthenic distillates (petroleum),2,0
+300000541,"1,2,3-Trichloropropane",2,0
+300000550,Propyne,2,0
+300000553,tert-Butylamine,2,0
+300000563,Butyl methacrylate,2,0
+300000564,p-tert-Butyltoluene,2,0
+300000570,2-(Dibutylamino)ethanol,2,0
+300000585,Dimethoxymethane,2,0
+300000591,Adiponitrile,2,0
+300000592,Diethylene glycol monomethyl ether,2,0
+300000594,Ethylene glycol monohexyl ether,2,0
+300000597,C.I. Pigment Blue 15,2,0
+300000598,Anthanthrene,2,0
+300000611,Undecane,2,0
+300000612,Boric oxide,2,0
+300000627,Boron trifluoride,2,0
+300000636,Nickel sulfate,2,0
+300000640,Castor oil,2,0
+300000641,"Turpentine, oil",2,0
+300000642,Paraffin oils,2,0
+300000650,Ammonium chloride,2,0
+300000652,Zinc chromate,2,0
+300000655,Diborane,2,0
+300000657,Chromic acid cyclohexylamine salt,2,0
+300000673,Oxygen,2,0
+320002701,Halogens and Hydrogen Halides,2,0
+320002703,Total Volatile Hydrocarbons,2,0
+603,Benzene,1,0
+726,Bromomethane,1,0
+955,HCFC [hydrochlorofluorocarbons],1,0
+1631,ETHYLBENZENE,1,0
+1654,ETHYLENE GLYCOL 95 & 96 [MEDIA OFF-SITE],1,0
+1888,FURFURYL ALCOHOL,1,0
+2049,Hexane,1,0
+2423,Manganese,1,0
+2701,n-Hexane,1,0
+3792,SODIUM HYDOXIDE,1,0
+4311,Trichlorofluoromethane,1,0
+4700,"XYLEEN [93, 94, 95, 96 & 97]",1,0
+4928,BIS[2-ETHYLHEXYL]PHTHALATE,1,0
+6092,STRENE,1,0
+7827,Phenanthrene,1,0
+8280,PCP,1,0
+10115,o-Toluidine,1,0
+10345,Chloroform,1,0
+10725,Ethylene thiourea,1,0
+11673,Tribromomethane,1,0
+300000040,Crotonaldehyde,1,0
+300000050,Dimethylphenol,1,0
+300000053,Hexamethylphosphoramide,1,0
+300000059,Chlorobenzilate,1,0
+300000061,"HFC-227ea (1,1,1,2,3,3,3-heptafluoropropane)",1,0
+300000192,Dichlorvos,1,0
+300000199,Propylene glycol,1,0
+300000244,beta-Propiolactone,1,0
+300000286,5-ETHYLIDENE-2-NORBORNENE,1,0
+300000299,CHLOROPHENOLS,1,0
+300000300,COKE OVEN COMPOUNDS (E649830),1,0
+300000313,OLEFINS,1,0
+300000361,Diphenylamine,1,0
+300000413,Helium,1,0
+300000442,Paraffin wax,1,0
+300000445,Tri-n-butyl phosphate,1,0
+300000449,Triphenyl phosphate,1,0
+300000453,Zirconium,1,0
+300000455,"N,N-Dimethyl acetamide, whole water",1,0
+300000457,Ethyl methacrylate,1,0
+300000459,Butylamine,1,0
+300000464,Pentaerythritol,1,0
+300000483,Aluminum chloride,1,0
+300000486,"2,3-Dichloropropene",1,0
+300000488,"2,3,4,6-Tetrachlorophenol",1,0
+300000501,Ethylenediamine,1,0
+300000504,Pentanoic acid,1,0
+300000505,Phenyl glycidyl ether,1,0
+300000514,Potassium cyanide,1,0
+300000516,Freshwater in drilling fluids,1,0
+300000520,Methacrylonitrile,1,0
+300000524,CFC-115,1,0
+300000526,2-Chloroethanol,1,0
+300000527,Iodine,1,0
+300000528,"2,4-Dichlorophenol",1,0
+300000531,Methyl disulfide,1,0
+300000533,Indium,1,0
+300000534,Aroclor 1242,1,0
+300000535,"cis-1,3-Dichloropropene",1,0
+300000536,"trans-1,4-Dichloro-2-butene",1,0
+300000537,Chlorodibromomethane,1,0
+300000538,"cis-1,2-Dichloroethylene",1,0
+300000539,2-Hexanone,1,0
+300000540,Halon 1011,1,0
+300000542,Ethyl mercaptan,1,0
+300000545,Nitroglycerin,1,0
+300000546,Safrole,1,0
+300000547,Thimerosal,1,0
+300000548,Benzamide,1,0
+300000554,CFC-114,1,0
+300000555,Tri-o-cresyl phosphate,1,0
+300000556,Isobutyronitrile,1,0
+300000557,2-Chloro-1-propanol,1,0
+300000562,Isobutyl isobutyrate,1,0
+300000569,"4,4' - diaminodiphenyl ether",1,0
+300000571,2-Ethylhexyl acrylate,1,0
+300000572,sec-Butyl acetate,1,0
+300000574,1-Propanethiol,1,0
+300000576,Chloroacetaldehyde,1,0
+300000578,Diisopropylamine,1,0
+300000583,Cyclohexanol,1,0
+300000584,Butanenitrile,1,0
+300000586,Ethyl formate,1,0
+300000587,2-Heptanone,1,0
+300000588,"Ethylene glycol monomethyl ether acEthanol, 2-methoxy-, 1-acetate",1,0
+300000590,"Ethylene glycol monoethyl ether acetEthanol, 2-ethoxy-, 1-acetate",1,0
+300000596,Isoamyl acetate,1,0
+300000599,"1,4-Diazabicyclo[2.2.2]octane",1,0
+300000601,Diethyl sulfide,1,0
+300000602,Ketene,1,0
+300000604,Mustard gas,1,0
+300000606,Cyclopentadiene,1,0
+300000607,Lithium acetate,1,0
+300000613,Cadmium oxide,1,0
+300000620,Allyl propyl disulfide,1,0
+300000622,"C.I. Acid Blue 9, diammonium salt",1,0
+300000624,"1-(3-Chloroallyl)-3,5,7-Triaza-1-azoniaadamantane chloride",1,0
+300000628,Phosphorus trichloride,1,0
+300000629,Zinc sulfate,1,0
+300000632,Lithium amide,1,0
+300000633,Hydrogen selenide,1,0
+300000635,Arsine,1,0
+300000638,Strontium chromate,1,0
+300000646,Polyvinyl alcohol,1,0
+300000648,Boron trichloride,1,0
+300000656,2-Dodecenylsuccinic anhydride,1,0
+300000662,Naphthalene diisocyanate,1,0
+300000663,Diisodecyl phthalate,1,0
+300000666,Dipropylene glycol monomethyl ether,1,0
+320002705,Total Selected Metals,1,0

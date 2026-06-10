@@ -1,0 +1,20 @@
+ENF_TYPE_CODE,ENF_TYPE_DESC,n,pct
+NOV,Notice of Violation,323242,96.1
+DAWL,Warning Letter,10488,3.1
+LREO,Other Response - Letter to Regulated Entity,1325,0.4
+DASLA,State/local Action,491,0.1
+NFAO,Other Response - No Further Action,405,0.1
+NONC,Notice of Noncompliance Issued,180,0.1
+AERO,Other Response - Agency Enforcement Review,152,0
+LOVWL,Letter of Violation/ Warning Letter,64,0
+LRE,Letter to Regulated Entity,31,0
+NOD,Notice of Determination,18,0
+IRL,Information Request Letter,5,0
+SCL,Show Cause Letter,2,0
+AER,Agency Enforcement Review,1,0
+IRLO,Other Response - Information Request Letter,1,0
+NFA,No Further Action,1,0
+NST,Other Response - Notice to State/Tribe,1,0
+OAMC,Other Actions that meet Informal Enforcement Action Criteria,1,0
+ONV,Oral Notification of Violation,1,0
+OSCL,Other Response - Show Cause Letter,1,0

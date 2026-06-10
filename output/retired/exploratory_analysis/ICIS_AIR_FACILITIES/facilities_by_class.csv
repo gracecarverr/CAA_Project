@@ -1,0 +1,8 @@
+AIR_POLLUTANT_CLASS_CODE,AIR_POLLUTANT_CLASS_DESC,n_facilities
+MIN,Minor Emissions,196214
+SMI,Synthetic Minor Emissions,37446
+MAJ,Major Emissions,19078
+NA,NA,15379
+UNK,Emissions classification unknown,7235
+NAP,Not applicable,2671
+OTH,Other,1188

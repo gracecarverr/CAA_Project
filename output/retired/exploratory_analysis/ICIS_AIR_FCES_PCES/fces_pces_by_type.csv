@@ -1,0 +1,12 @@
+COMP_MONITOR_TYPE_CODE,COMP_MONITOR_TYPE_DESC,n_records
+FOO,FCE On-Site,639462
+PFF,PCE Off-Site,628430
+PCE,PCE On-Site,370070
+POR,PCE On-Site Record/Report Review,99120
+POM,PCE On-Site Monitoring/Sampling,37658
+FFO,FCE Off-Site,21661
+POV,PCE On-Site Visible Emission Observation,3451
+POI,PCE On-Site Interview,1407
+POC,PCE On-Site CEMS/CMS Audit,686
+PFR,PCE Off-Site - Review of 114 Response,91
+POF,PCE On-Site Fenceline/Ambient Monitoring,8

@@ -1,0 +1,8 @@
+AIR_OPERATING_STATUS_CODE,AIR_OPERATING_STATUS_DESC,n,pct
+OPR,Operating,184040,65.91
+CLS,Permanently Closed,77065,27.6
+NA,NA,12467,4.47
+TMP,Temporarily Closed,4019,1.44
+PLN,Planned Facility,745,0.27
+CNS,Under Construction,548,0.2
+SEA,Seasonal,327,0.12

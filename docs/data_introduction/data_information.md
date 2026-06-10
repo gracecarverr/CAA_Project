@@ -14,8 +14,8 @@
 
 ### Facility/Source Level Identifying Data (ICIS-AIR_FACILITIES.csv)
 
-- The base identification table — one row per regulated air source. Contains everything needed to locate, classify, and identify a facility.
-- **Cross-section.** One row per facility; no time dimension.
+- The base identification table — one row per regulated air source. Contains everything needed to locate, classify, and identify a source. Multiple air sources at the same physical facility share a `REGISTRY_ID`.
+- **Cross-section.** One row per air source (`PGM_SYS_ID`); no time dimension.
 - **Key fields:**
     - `PGM_SYS_ID` — the primary key across all ICIS-Air tables. An alphanumeric ID that uniquely identifies each air source; format varies by state but typically combines census state code, FIPS county code, local control district number, and a sequence number.
     - `REGISTRY_ID` — Facility Registry Service (FRS) ID. Links ICIS-Air records to other EPA datasets (e.g., emissions, TRI).
@@ -158,12 +158,118 @@
 
 > https://echo.epa.gov/tools/data-downloads/air-emissions-download-summary
 
-## AFS Dataset (FROZEN DATA AS OF OCTOBER 17,2024)
+## AFS Dataset (FROZEN DATA AS OF OCTOBER 17, 2014)
 
-- Emissions, compliance, and enforcement data on stationary sources of air pollution. 
-- Data rolled up to plant level. 
+- Emissions, compliance, and enforcement data on stationary sources of air pollution. Regulated sources range from large industrial facilities to small operations like dry cleaners. Excludes facilities that are solely asbestos demolition/renovation contractors or landfills.
+- Data rolled up to plant level. Plant-level data treats the entire facility as one unit rather than looking at individual emission points, processes, or stacks. Data at plant-level:
+    * General source information (identification number, name).
+    * High Priority Violator (HPV) information.
+    * Air Program information — a repeating block of data addressing each regulatory area that a facility is subject to (e.g., SIP, NSPS, NESHAP, PSD).
+- Each air program offers: historical compliance status (quarterly, FY2007–present), action/activity data (inspections, enforcement actions, 1978–present), and operating status.
+- Action/activity data is rolled up to the plant level to eliminate multi-counting actions entered at multiple air programs (e.g., an inspection addressing SIP, NSPS, and NSR is recorded once, with `ALL_AIR_PROGRAM_CODES` listing all three).
+- Uses AFS ID (SCSC). Does not use FRS code directly.
+
+> AFS records included in the download files are those where the operating status is planned (has applied for a construction permit), under construction, operating, temporarily closed, seasonal, or permanently closed.
 
 > https://echo.epa.gov/system/files/AFS_Data_Download.pdf
+
+### Facility/Source Level Identifying Data (AFS_FACILITIES.csv)
+
+- One row per plant. Contains identification, location, classification, operating status, and compliance status.
+- **Cross-section.** One row per plant (`AFS_ID`); no time dimension.
+- **Key fields:**
+    - `AFS_ID` — 10-character alphanumeric code uniquely identifying each permitted plant. Composed of Census FIPS state code + FIPS county code + unique AFS plant ID. Also known as SCSC in AFS.
+    - `PLANT_ID` — numeric plant identifier.
+    - `PLANT_NAME` / `PLANT_STREET_ADDRESS` / `PLANT_CITY` / `PLANT_COUNTY` / `STATE` / `ZIP_CODE` — location fields.
+    - `EPA_REGION` — EPA region (01–10).
+    - `PRIMARY_SIC_CODE` / `SECONDARY_SIC_CODE` — four-character Standard Industrial Classification codes.
+    - `NAICS_CODE` — six-character North American Industry Classification System code.
+    - `EPA_CLASSIFICATION_CODE` — emissions classification per the Alabama Power decision / 1993 EPA guidance:
+        - `A` = Actual or potential emissions above major source thresholds | `A1` = Actual or potential controlled emissions >100 tons/year | `A2` = Actual <100 tons/year, potential uncontrolled >100 tons/year | `B` = Potential uncontrolled <100 tons/year | `SM` = Synthetic minor (below all major source thresholds) | `C` / `UK` = Unknown | `ND` = Thresholds not defined
+    - `OPERATING_STATUS` — operational condition (generated from most significant air program status):
+        - `O` = Operating | `C` = Under Construction | `P` = Planned | `T` = Temporarily Closed | `X` = Permanently Closed | `I` = Seasonal | `D` = NESHAP Demolition | `R` = NESHAP Renovation | `S` = NESHAP Spraying | `L` = Landfill
+    - `EPA_COMPLIANCE_STATUS` — EPA's determination of compliance (worst case across EPA and state fields):
+        - `0` = Unknown | `1` = In Violation – No Schedule | `2` = In Compliance – Source Test | `3` = In Compliance – Inspection | `4` = In Compliance – Certification | `5` = Meeting Compliance Schedule | `6` = In Violation – Not Meeting Schedule | `7` = In Violation – Unknown re Schedule | `8` = No Applicable State Regulation | `9` = In Compliance – Shut Down | `D` = HPV Violation (auto) | `E` = FRV Violation (auto) | `F` = HPV On Schedule (auto) | `G` = FRV On Schedule (auto) | `H` = In Compliance (auto) | `M` = In Compliance – CEMs
+    - `CURRENT_HPV` — current High Priority Violator status:
+        - `S` = Unaddressed, state/local lead | `T` = Addressed, state lead | `E` = Unaddressed, EPA lead | `F` = Addressed, EPA lead | `B` = Unaddressed, shared lead | `C` = Addressed, shared lead | `X` = Unaddressed, lead unassigned
+    - `STATE_COMPLIANCE_STATUS` — state agency's compliance determination (same code set as `EPA_COMPLIANCE_STATUS`).
+    - `FEDERALLY_REPORTABLE` — ECHO-generated flag (`Y`/`N`). `Y` if emission classification is major or synthetic minor, or subject to NSPS/NESHAP with compliance status ≠ "no applicable state regulation."
+    - `AFS_GOV_FACILITY_CODE` — government facility indicator:
+        - `0` = Privately owned/operated | `1` = Federal government | `2` = State government | `3` = County | `4` = Municipality | `5` = District | `6` = Tribe
+    - `LOCAL_CONTROL_REGION` — two-character local control region code (meanings vary by state).
+
+### Air Program (AIR_PROGRAM.csv)
+
+- Lists each regulatory air program a plant is subject to, along with pollutant-level classification and compliance status. A single plant can appear under multiple programs. Each row is a plant–program combination, potentially with pollutant-level detail.
+- **Panel.** Multiple programs per plant.
+- **Key fields:**
+    - `AFS_ID` / `PLANT_ID` — plant identifiers (join to Facilities).
+    - `AIR_PROGRAM_CODE` — one-character code identifying the regulatory air program:
+        - `0` = SIP | `1` = SIP under federal jurisdiction (FIP) | `3` = Non-federally reportable | `4` = CFC Tracking | `6` = PSD | `7` = NSR | `8` = NESHAP (Part 61) | `9` = NSPS | `A` = Acid Precipitation | `F` = FESOP (non-Title V) | `I` = Native American | `M` = MACT (Part 63 NESHAPS) | `T` = TIP (Tribal Implementation Plan) | `V` = Title V
+    - `AIR_PROGRAM_STATUS` — operating status within this program (same codes as `OPERATING_STATUS` in Facilities).
+    - `EPA_CLASSIFICATION_CODE` — emissions classification at the air program level (same codes as Facilities).
+    - `EPA_COMPLIANCE_STATUS` — compliance status at the air program level (same codes as Facilities).
+    - `AIR_PROGRAM_CODE_SUBPARTS` — applicable subparts, delimited by spaces (e.g., NSPS subpart `Da` for electric utility steam generators). See PDF for full subpart list.
+    - `POLLUTANT_CODE` — five-character pollutant code at the air program level (see Appendix 1 in PDF for full list).
+    - `CHEMICAL_ABSTRACT_SERVICE_NMBR` — CAS number for the pollutant, if it exists.
+    - `POLLUTANT_CLASSIFICATION` — emissions classification at the pollutant level (same codes as `EPA_CLASSIFICATION_CODE`).
+    - `POLLUTANT_COMPLIANCE_STATUS` — compliance status at the pollutant level (same codes as `EPA_COMPLIANCE_STATUS`).
+
+### Actions (AFS_ACTIONS.csv)
+
+- Records of compliance monitoring activities and enforcement actions, rolled up to plant level. Includes inspections (FCEs, PCEs), enforcement actions (NOVs, administrative orders, consent decrees), stack tests, Title V certification reviews, and other activities. Each row is a single action event.
+- **Event-level panel.** Multiple dated actions per plant over time (1978–present).
+- **Key fields:**
+    - `AFS_ID` / `PLANT_ID` — plant identifiers (join to Facilities).
+    - `ANU1` — action number; uniquely identifies an action record within a plant.
+    - `NATIONAL_ACTION_TYPE` — two-character code identifying the compliance/enforcement activity. Key codes:
+        - Inspections (FCE): `FE` = EPA FCE on-site | `FZ` = EPA FCE off-site | `FS` = State FCE on-site | `FF` = State FCE off-site | `1A` = EPA inspection level 2+ | `5C` = State inspection level 2+
+        - Inspections (PCE): `ES` = EPA PCE on-site | `EX` = EPA PCE off-site | `PS` = State PCE on-site | `PX` = State PCE off-site
+        - Formal enforcement: `8A` = EPA 113(a) order | `8C` = State administrative order | `6B` = EPA court consent decree | `2D` = Consent agreement filed | `9A` = 113(d) delayed compliance order | `7A` = Notice of noncompliance (Section 120)
+        - Informal enforcement: `6A` = EPA NOV | `7C` = State NOV | `3E` = Warning notification of violation | `3F` = Warning substantive violation | `5A` = EPA pre-NOV letter | `LL` = EPA Section 114 letter
+        - Stack tests: `2A` = EPA conducted | `3A` = Owner/operator conducted | `6C` = State conducted
+        - Title V: `CB` = Title V annual compliance cert due/received | `ER` = Title V cert review by EPA | `SR` = Title V cert review by state
+        - Resolution: `C4` = Final compliance | `C7` = Closeout memo | `VR` = Violation resolved
+    - `NATIONAL_ACTION_DESC` — text description for the action type.
+    - `DATE_ACHIEVED` — date of the completed action (YYYYMMDD format).
+    - `ALL_AIR_PROGRAM_CODES` — all air programs associated with this action, space-delimited.
+    - `PENALTY_AMOUNT` — civil penalty assessed or agreed to, in dollars.
+    - `RESULT_CODE` — result of stack tests and Title V reviews:
+        - `PP` = Stack test passed | `FF` = Stack test failed | `99` = Pending | `MC` = In compliance | `MV` = In violation | `MU` = Unknown compliance status | `FR` = Federally reportable violation | `01` = Action achieved | `02` = Not achieved
+    - `POLLUTANT_CODE` — pollutant associated with the action.
+    - `ALL_VIOLATING_POLL_CODES` — pollutant(s) in violation, space-delimited.
+    - `ALL_VIOLATION_TYPE_CODES` — three-character violation type codes (e.g., `GC1` = Failure to obtain PSD/NSR permit, `GC8` = Emission limit violation via stack test, `M1A` = Any emission limit violation via stack testing). See PDF for full list.
+    - `KEY_ACTION_NUMBERS` — links the action to violation pathway / FCE pathway(s). Up to ten pathways.
+    - `CREATION_DATE` / `DATE_RECORD_IS_UPDATED` — record metadata dates.
+
+### Historical Compliance – Air Program Level (AFS_AIR_PRG_HIST_COMPLIANCE.csv)
+
+- Quarterly compliance status for each air program at each plant. Provides a time series of compliance determinations from FY2007 to present. This is the key panel dataset in AFS — it gives quarterly compliance status not available in ICIS-Air.
+- **Panel.** One row per plant–program–quarter combination.
+- **Key fields:**
+    - `AFS_ID` — plant identifier (join to Facilities).
+    - `AIR_PROGRAM_CODE` — which regulatory program (same codes as Air Program table).
+    - `HISTORICAL_COMPLIANCE_DATE` — quarter identifier in YYQQ format. Quarters are calendar year (Q1 = Jan–Mar, Q2 = Apr–Jun, Q3 = Jul–Sep, Q4 = Oct–Dec).
+    - `HISTORICAL_COMPLIANCE_STATUS` — compliance status for that quarter (same codes as `EPA_COMPLIANCE_STATUS` in Facilities).
+
+### Historical High Priority Violation Status (AFS_HPV_HISTORY.csv)
+
+- Tracks the lifecycle of HPV designations: when a plant entered HPV status (day zero), which agency led enforcement, and when/how the violation was resolved. Each row is one HPV episode.
+- **Event-level panel.** Multiple HPV episodes per plant over time.
+- **Key fields:**
+    - `AFS_ID` — plant identifier (join to Facilities).
+    - `HPV_DAYZERO_TYPE` — lead agency at day zero:
+        - `2Z` = Federal day zero | `2E` = State day zero | `2B` = Shared enforcement lead day zero
+    - `HPV_DAYZERO_DATE` — date the plant entered HPV status.
+    - `HPV_RESOLVED_TYPE` — action that resolved the HPV (blank if unresolved):
+        - `C3` = 113(d) penalty collected | `C7` = Closeout memo issued | `2K` = Compliance by state, no action required | `7G` = Source returned to compliance by EPA, no further action | `VR` = Violation resolved | `WD` = EPA 113(d) withdrawn | `SE` = 113(d) settlement | `2L` = Proposed SIP revision to compliance | `2M` = Source-specific SIP revision
+    - `HPV_RESOLVED_DATE` — date the HPV was resolved. Gap between day-zero and resolution measures enforcement speed.
+
+### Crosswalk to ICIS-Air
+
+- AFS uses `AFS_ID` as its primary key. There is no clean crosswalk between `AFS_ID` and ICIS-Air's `PGM_SYS_ID`. Both are derived from state/county/plant codes but use different formatting conventions.
+- AFS's key unique feature is **quarterly historical compliance status** (`AFS_AIR_PRG_HIST_COMPLIANCE`), which is not available in ICIS-Air.
+- AFS data is frozen as of October 17, 2024.
 
 ## CAA Pipeline Dataset
 

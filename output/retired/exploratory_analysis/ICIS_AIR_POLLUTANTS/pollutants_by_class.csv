@@ -1,0 +1,7 @@
+AIR_POLLUTANT_CLASS_CODE,AIR_POLLUTANT_CLASS_DESC,n_records
+MIN,Minor Emissions,629694
+SMI,Synthetic Minor Emissions,140554
+MAJ,Major Emissions,100341
+UNK,Emissions classification unknown,73209
+NAP,Not applicable,29845
+OTH,Other,2836
