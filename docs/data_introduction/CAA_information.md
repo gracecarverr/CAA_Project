@@ -1,6 +1,7 @@
 # General Clean Air Act (CAA) Information
 
 > https://www.epa.gov/laws-regulations/summary-clean-air-act
+> https://augustmack.com/2022/04/25/understanding-your-air-permit/
 
 ## 42 U.S.C. §7401 et seq. (1970)
 
