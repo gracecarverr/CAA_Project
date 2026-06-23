@@ -284,28 +284,7 @@ cat("In facilities table:", sum(pipe_reg %in% fac_reg), "\n")
 cat("Not in facilities table:", sum(!pipe_reg %in% fac_reg), "\n")
 
 # ============================================================================================
-# 10. PIPELINE FACILITIES IN OUR PANEL
-# ============================================================================================
-
-cat("\n====== PIPELINE x PANEL OVERLAP ======\n")
-panel <- read_csv(here("data/derived/title_v_utility_panel.csv"), show_col_types = FALSE)
-panel_ids <- unique(panel$PGM_SYS_ID)
-
-pipe_in_panel <- pipe |> filter(SOURCE_ID %in% panel_ids)
-cat("Pipeline rows for panel facilities:", nrow(pipe_in_panel), "\n")
-cat("Panel facilities appearing in pipeline:", n_distinct(pipe_in_panel$SOURCE_ID), "of", length(panel_ids), "\n")
-
-cat("\nViolation types for panel facilities in pipeline:\n")
-pipe_in_panel |> count(VIOL_TYPE, sort = TRUE) |> print()
-
-cat("\nPIPELINE_FLAG for panel facilities:\n")
-print(table(pipe_in_panel$PIPELINE_FLAG))
-
-cat("\nEA_TYPE for panel facilities (non-blank):\n")
-pipe_in_panel |> filter(EA_TYPE != "") |> count(EA_TYPE, sort = TRUE) |> print(n = 10)
-
-# ============================================================================================
-# 11. WHAT THE PIPELINE ADDS OVER INDIVIDUAL ICIS-AIR TABLES
+# 10. WHAT THE PIPELINE ADDS OVER INDIVIDUAL ICIS-AIR TABLES
 # ============================================================================================
 
 cat("\n====== WHAT THE PIPELINE ADDS ======\n")
@@ -323,14 +302,14 @@ cat("  FEA_ISSUE_DATE_FLAG — flag for formal enforcement action issue date\n")
 cat("  EA_FEA_ACTIVITY_ID — separate ID for formal enforcement actions\n")
 cat("  EA_COMP_ACTION_COST — supplemental environmental project / compliance costs\n\n")
 
-cat("For panel construction, the pipeline can provide:\n")
+cat("Beyond the individual tables, the pipeline can provide:\n")
 cat("  1. Violation-to-enforcement linkage (which EA responded to which violation)\n")
 cat("  2. Violation resolution status (PIPELINE_FLAG, VIOL_END_DATE)\n")
 cat("  3. Time-to-resolution for individual violations\n")
 cat("  4. Whether a violation triggered an evaluation or vice versa\n")
 
 # ============================================================================================
-# 12. COMPLIANCE ACTION COST BY LEAD AGENCY (STATE / EPA / LOCAL)
+# 11. COMPLIANCE ACTION COST BY LEAD AGENCY (STATE / EPA / LOCAL)
 # ============================================================================================
 
 cat("\n====== COMPLIANCE ACTION COST BY LEAD AGENCY ======\n")
@@ -384,7 +363,7 @@ write_csv(agency_cost, file.path(out_dir, "pipeline_cost_by_agency.csv"))
 write_csv(ea_type_by_agency, file.path(out_dir, "pipeline_ea_type_by_agency.csv"))
 
 # ============================================================================================
-# 13. SAVE SUMMARY
+# 12. SAVE SUMMARY
 # ============================================================================================
 
 summary_out <- pipe |>

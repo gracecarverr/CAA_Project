@@ -1,11 +1,11 @@
 # =========================================================================================================
-# 00_run_all.R — master script that reproduces the analysis pipeline end to end.
+# 00_run_all.R — master script for the project: checks packages, optionally regenerates the exploratory
+# and data-dictionary outputs, and records the session.
 #
 # WHAT IT DOES
 #   1. Locates the project root and checks that all required R packages are installed.
-#   2. Sources the analysis pipeline (scripts 10 -> 11 -> 12 -> 13) in order.
-#   3. Optionally runs the exploratory and data-dictionary scripts (off by default; see flags below).
-#   4. Writes a session/version record to output/sessionInfo.txt for reproducibility.
+#   2. Optionally runs the exploratory and data-dictionary scripts (off by default; see flags below).
+#   3. Writes a session/version record to output/sessionInfo.txt for reproducibility.
 #
 # HOW TO RUN
 #   - From a terminal:        Rscript scripts/00_run_all.R       (run from the repository root)
@@ -47,12 +47,9 @@ library(here)
 cat("Project root:", here(), "\n")
 
 # ---- Options: which optional script groups to run -------------------------------------------------------
-# The analysis pipeline (10-13) always runs. The two groups below are slower and not required to
-# reproduce the panel and its descriptives; flip to TRUE to regenerate them.
-run_exploration <- FALSE   # scripts/explore/*       per-table profiling CSVs
+# Both groups below are off by default (they are slower); flip to TRUE to regenerate them.
+run_exploration <- FALSE   # scripts/explore/*          per-dataset profiling CSVs
 run_tables      <- FALSE   # scripts/tables/09_table-*  data-dictionary .xlsx workbooks
-push_to_gsheet  <- FALSE   # mirror output/tables/*.xlsx to one Google Sheet, values only (needs config)
-publish_gdrive  <- FALSE   # publish output/tables/*.xlsx to a Drive folder as formatted Sheets (needs config)
 
 # ---- Helper: source one script with a labeled banner ----------------------------------------------------
 run_script <- function(rel_path) {
@@ -74,18 +71,7 @@ if (run_tables) {
   }
 }
 
-# ---- 2b. Optional: mirror the tables to Google (values to one Sheet, or formatted Sheets to a folder) ---
-# Wrapped in try() so missing/incomplete Google config warns but never aborts the pipeline.
-if (push_to_gsheet) try(run_script("scripts/14_push_tables_to_gsheet.R"))
-if (publish_gdrive) try(run_script("scripts/15_publish_tables_gdrive.R"))
-
-# ---- 3. Analysis pipeline (required, in order) ----------------------------------------------------------
-run_script("scripts/10_oiai_reclassification_panel.R")  # OIAI reclassification panel (Wayback snapshots)
-run_script("scripts/11_data_quality_audit.R")           # data-quality audit (console report)
-run_script("scripts/12_title_v_utility_panel.R")        # builds data/derived/title_v_utility_panel.csv
-run_script("scripts/13_panel_descriptives.R")           # descriptives + figures for the panel
-
-# ---- 4. Record the session for reproducibility ----------------------------------------------------------
+# ---- 3. Record the session for reproducibility ----------------------------------------------------------
 dir.create(here("output"), showWarnings = FALSE, recursive = TRUE)
 writeLines(capture.output(sessionInfo()), here("output/sessionInfo.txt"))
 cat("\nDone. Session and package versions written to", here("output/sessionInfo.txt"), "\n")
