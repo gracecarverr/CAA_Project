@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\setlist[itemize]{leftmargin=1.4em, itemsep=0.2em, topsep=0.3em}
+
+\newcommand{\slidetag}[1]{\textcolor{gray!70}{\small\textsc{#1}}}
+
+\title{\vspace{-2em}\textbf{Using Claude for Federal Environmental Data: Documentation \& Reproducibility}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-3em}
+
+%==================================================================
+\section*{Problem \& Why}
+
+EPA's Clean Air Act compliance data involves four disconnected systems: legacy
+AFS, modern ICIS-Air, the enforcement ``pipeline,'' and the FRS facility
+registry. Each has its own undocumented ID scheme, placeholder conventions, and
+structural missingness. None of it is research-usable until it is documented,
+validated, and linked across systems, and a single misread flag or unverified
+ID match could corrupt everything downstream. Done by hand, the process of documenting and summarizing these datasets can be time-consuming and
+monotonous.
+
+%==================================================================
+\section*{The Workflow}
+
+I built the data documentation and summary tables with Claude, keeping the
+entire process reproducible. Over the course of a few days, it ran the analysis scripts across 17 datasets and
+more than 30 million rows, read the real output, and reported only what was
+present in the data, with every figure and table traceable back to a script.
+
+\begin{itemize}
+  \item \textbf{Data dictionaries \& summary tables.} Claude wrote and ran the R scripts
+        that profiled each dataset, its variable distributions, value counts,
+        and missingness, then drafted data dictionaries and summary tables directly from
+        that output.
+  \item \textbf{Structural diagnosis.} It found that much of the missingness was
+        not bad data but system artifacts like placeholder rows, sentinel
+        $-9999$s, and flag conventions, and recorded those findings in the
+        documentation rather than treating the gaps as errors.
+  \item \textbf{Worked to my reproducibility standards.} The raw data was never
+        modified, every derived file was rebuilt from code, and when a result
+        shifted unexpectedly it was flagged rather than quietly smoothed over.
+\end{itemize}
+
+%==================================================================
+\section*{Outcome \& Efficiency}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{0.40\textwidth} p{0.28\textwidth} p{0.22\textwidth}@{}}
+\toprule
+\textbf{Task} & \textbf{By hand} & \textbf{With Claude} \\
+\midrule
+Document and summarize 17 federal datasets (dictionaries + tables)
+  & $\sim$2--3 weeks & $\sim$1--2 days \\
+Structural missingness diagnosis
+  & $\sim$3--5 days & $\sim$1 hour \\
+Empirical-only audit of every documented claim
+  & $\sim$1--2 days per dataset & minutes \\
+\midrule
+\textbf{Total}
+  & \textbf{$\sim$4--5 weeks of solo work}
+  & \textbf{$\sim$1 week of sessions} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{What That Time Bought}
+
+\begin{itemize}
+  \item \textbf{Cross-dataset validation.} Reconciled record counts and variable definitions across the separate systems, catching mismatches that would otherwise surface much later.
+  \item \textbf{Reproducible publishing.} Set up a pipeline that pushes the
+        summary tables directly to shared Google Sheets / Drive, so
+        collaborators work from live outputs rather than emailed spreadsheets.
+  \item \textbf{Policy context \& literature.} Time to engage with the
+        regulatory background, how CAA enforcement and emissions programs
+        operate, and the literature on environmental monitoring and enforcement.
+\end{itemize}
+
+\end{document}

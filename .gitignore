@@ -4,3 +4,17 @@
 # Raw data — too large for GitHub; see data/raw/README.md for sources
 data/raw/*
 !data/raw/README.md
+
+# Google Sheets publishing — secrets, never commit
+# (config/gsheet_config.R holds your Sheet id + email; .secrets/ holds the cached OAuth token)
+config/gsheet_config.R
+.secrets/
+
+# FRS bulk download — large source data (FRS_PROGRAM_LINKS.csv & FRS_FACILITIES.csv exceed GitHub's 100MB limit)
+data/frs_downloads/
+
+# Excel temporary lock files
+~$*.xlsx
+
+# R console history
+.Rapp.history

@@ -1,0 +1,4 @@
+agency_group,n_rows,n_facilities,n_with_ea,n_with_penalty,total_penalty,mean_penalty,median_penalty,max_penalty,n_with_comp_cost,total_comp_cost,mean_comp_cost,median_comp_cost,max_comp_cost
+State,59262,18812,41189,13439,1608667086,119701.39787186492,6750,47833048.21,6,5367257,894542.8333333333,633628.5,2000000
+EPA,194,114,145,12,3468000,289000,75000,999000,5,170239033,34047806.6,43823333,75000000
+Local,6,4,6,2,963800,481900,481900,950000,0,0,NA,NA,0
