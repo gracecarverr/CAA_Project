@@ -2,7 +2,7 @@
 # 01_explore-facilities.R — exploratory profiling of ICIS-AIR_FACILITIES (the facility master table).
 # Tabulates classification, operating status, and state/region distributions, and documents the
 # REGISTRY_ID -> PGM_SYS_ID one-to-many structure with worked examples. Writes CSVs to
-# output/explore/facilities/. Exploratory only — not part of the analysis pipeline. Paths via here::here().
+# output/explore_tabulations/facilities/. Exploratory only — not part of the analysis pipeline. Paths via here::here().
 # =========================================================================================================
 
 # ---- Load packages --------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ facilities <- read_csv(here("data/raw/ICIS-AIR_downloads/ICIS-AIR_FACILITIES.csv
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/facilities")
+out_dir <- here("output/explore_tabulations/facilities")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

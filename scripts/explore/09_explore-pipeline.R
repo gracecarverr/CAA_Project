@@ -1,7 +1,7 @@
 # =========================================================================================================
 # 09_explore-pipeline.R — exploratory profiling of the assembled PIPELINE_CAA_00_COMPLETE dataset
 # (the merged cross-table pipeline file), cross-referenced against ICIS-AIR_FACILITIES. Writes CSVs to
-# output/explore/pipeline/. Exploratory only — not part of the analysis pipeline. Paths via here::here().
+# output/explore_tabulations/pipeline/. Exploratory only — not part of the analysis pipeline. Paths via here::here().
 # =========================================================================================================
 
 library(here)
@@ -11,7 +11,7 @@ library(lubridate)
 library(tidyr)
 
 # here() anchors on the project's .git directory, so paths resolve from any working directory.
-out_dir <- here("output/explore/pipeline")
+out_dir <- here("output/explore_tabulations/pipeline")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 pipe <- read_csv(here("data/raw/PIPELINE_CAA_00_COMPLETE.csv"), show_col_types = FALSE)

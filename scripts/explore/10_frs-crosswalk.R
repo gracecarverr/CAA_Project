@@ -55,7 +55,7 @@
 #       (zip: https://echo.epa.gov/files/echodownloads/frs_downloads.zip). The script stops with a clear
 #       message if the file is missing.
 #
-# OUTPUTS  (output/explore/frs_crosswalk/)
+# OUTPUTS  (output/explore_tabulations/frs_crosswalk/)
 #   afs_to_icis_crosswalk.csv   one row per linked AFS facility: AFS_ID, REGISTRY_ID, ICIS PGM_SYS_ID(s)
 #   crosswalk_coverage.csv      one-row coverage summary (counts and percentages for each hop)
 #
@@ -72,7 +72,7 @@ library(tidyr)
 
 set.seed(1)  # only the substring diagnostic in Section 4 is stochastic (it samples ids); fix it for reproducibility.
 
-out_dir <- here("output/explore/frs_crosswalk")
+out_dir <- here("output/explore_tabulations/frs_crosswalk")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 frs_path <- here("data/frs_downloads/FRS_PROGRAM_LINKS.csv")
@@ -238,4 +238,3 @@ cat("\n====== DONE ======\n")
 cat("AFS facilities reaching an ICIS-Air id (end to end):", coverage$afs_with_any_icis_id,
     "(", coverage$pct_afs_reaching_icis, "% of all AFS facilities)\n")
 cat("Outputs written to:", out_dir, "\n")
-

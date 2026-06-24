@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 08_explore-stack-tests.R — exploratory profiling of ICIS-AIR_STACK_TESTS.
-# Tabulates stack-test status and cross-tabs; writes CSVs to output/explore/stack-tests/.
+# Tabulates stack-test status and cross-tabs; writes CSVs to output/explore_tabulations/stack-tests/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/stack-tests")
+out_dir <- here("output/explore_tabulations/stack-tests")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

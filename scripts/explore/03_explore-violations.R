@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 03_explore-violations.R — exploratory profiling of ICIS-AIR_VIOLATION_HISTORY.
-# Tabulates enforcement-response codes, agency types, cross-tabs; writes CSVs to output/explore/violations/.
+# Tabulates enforcement-response codes, agency types, cross-tabs; writes CSVs to output/explore_tabulations/violations/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/violations")
+out_dir <- here("output/explore_tabulations/violations")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

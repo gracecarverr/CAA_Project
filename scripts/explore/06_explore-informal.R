@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 06_explore-informal.R — exploratory profiling of ICIS-AIR_INFORMAL_ACTIONS.
-# Tabulates informal enforcement types (NOVs, warning letters), cross-tabs; writes to output/explore/informal/.
+# Tabulates informal enforcement types (NOVs, warning letters), cross-tabs; writes to output/explore_tabulations/informal/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/informal")
+out_dir <- here("output/explore_tabulations/informal")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

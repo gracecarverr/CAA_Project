@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 07_explore-pollutants.R — exploratory profiling of ICIS-AIR_POLLUTANTS.
-# Tabulates pollutant codes and pollutant-class cross-tabs; writes CSVs to output/explore/pollutants/.
+# Tabulates pollutant codes and pollutant-class cross-tabs; writes CSVs to output/explore_tabulations/pollutants/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/pollutants")
+out_dir <- here("output/explore_tabulations/pollutants")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

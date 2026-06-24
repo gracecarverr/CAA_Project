@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 05_explore-formal-actions.R — exploratory profiling of ICIS-AIR_FORMAL_ACTIONS.
-# Tabulates enforcement types, penalties, cross-tabs; writes CSVs to output/explore/formal-actions/.
+# Tabulates enforcement types, penalties, cross-tabs; writes CSVs to output/explore_tabulations/formal-actions/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/formal-actions")
+out_dir <- here("output/explore_tabulations/formal-actions")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

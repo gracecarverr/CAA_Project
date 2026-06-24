@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 02_explore-programs.R — exploratory profiling of ICIS-AIR_PROGRAMS (air-program enrollments).
-# Tabulates program codes, statuses, and cross-tabs; writes summary CSVs to output/explore/programs/.
+# Tabulates program codes, statuses, and cross-tabs; writes summary CSVs to output/explore_tabulations/programs/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/programs")
+out_dir <- here("output/explore_tabulations/programs")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

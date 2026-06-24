@@ -1,6 +1,6 @@
 # =========================================================================================================
 # 04_explore-compliance.R — exploratory profiling of ICIS-AIR_FCES_PCES (compliance evaluations).
-# Tabulates evaluation/monitor types and cross-tabs; writes CSVs to output/explore/compliance/.
+# Tabulates evaluation/monitor types and cross-tabs; writes CSVs to output/explore_tabulations/compliance/.
 # Exploratory only — not part of the analysis pipeline. Paths via here::here() (anchored on .git).
 # =========================================================================================================
 
@@ -19,7 +19,7 @@ facilities <- read_csv(file.path(icis_dir, "ICIS-AIR_FACILITIES.csv"), show_col_
 
 # ---- Output directory -----------------------------------------------------------------------------------
 
-out_dir <- here("output/explore/compliance")
+out_dir <- here("output/explore_tabulations/compliance")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ---- Structure ------------------------------------------------------------------------------------------

@@ -92,10 +92,10 @@ Rscript scripts/tables/09_table-formal-actions.R
 | `data/frs_downloads/` | Large local FRS files, also ignored by Git. | Put `FRS_PROGRAM_LINKS.csv` here before running `scripts/explore/10_frs-crosswalk.R`. |
 | `data/derived/` | Analysis-ready files created from raw inputs. | Read these in later analysis scripts. Rebuild the Title V files with `scripts/01_titlev_utility_panel_skeleton.R`; do not edit generated CSVs by hand. |
 | `scripts/` | Entry points for reproducibility and the current panel build. | Start with `00_run_all.R`; run `01_titlev_utility_panel_skeleton.R` independently for the utility panel. |
-| `scripts/explore/` | Dataset-specific profiling and the FRS crosswalk. | Run individual scripts while learning or checking a raw dataset, or enable `run_exploration` in `00_run_all.R`. Outputs go to `output/explore/`. |
+| `scripts/explore/` | Dataset-specific profiling and the FRS crosswalk. | Run individual scripts while learning or checking a raw dataset, or enable `run_exploration` in `00_run_all.R`. Outputs go to `output/explore_tabulations/`. |
 | `scripts/tables/` | Builders for formatted Excel data dictionaries plus a workbook cross-check. | Run an individual `09_table-*.R` file or enable `run_tables` in `00_run_all.R`. Run `10_crosscheck-tables.R` afterward to compare supported workbooks with frozen references. |
 | `scripts/plots/` | Reserved for plot-building code. | Currently empty; the tracked files in `output/plots/` are historical outputs and do not have active generator scripts here. |
-| `output/explore/` | CSV summaries, tabulations, missingness checks, notes, and FRS crosswalk outputs. | Inspect these for data structure and quality findings. They are descriptive outputs, not final research results. |
+| `output/explore_tabulations/` | CSV summaries, tabulations, missingness checks, notes, and FRS crosswalk outputs. | Inspect these for data structure and quality findings. They are descriptive outputs, not final research results. |
 | `output/tables/` | Generated `.xlsx` data dictionaries. | Open these for compact descriptions of raw-table fields and distributions. `backup_hardcoded/` contains frozen, hand-checked workbooks used by the cross-check script. |
 | `output/plots/` | Existing diagnostic figures. | Treat these as historical artifacts unless and until their generating scripts are restored. |
 | `output/retired/` | Superseded exploratory summaries and synthesis notes. | Use only for project history or comparison. Do not treat this folder as the current pipeline. |
@@ -138,16 +138,16 @@ The script builds a panel scaffold only. It does not yet construct final treatme
 
 | Script | Main input | Output folder |
 |---|---|---|
-| `01_explore-facilities.R` | `ICIS-AIR_FACILITIES.csv` | `output/explore/facilities/` |
-| `02_explore-programs.R` | Programs and facilities | `output/explore/programs/` |
-| `03_explore-violations.R` | Violation history and facilities | `output/explore/violations/` |
-| `04_explore-compliance.R` | FCE/PCE evaluations and facilities | `output/explore/compliance/` |
-| `05_explore-formal-actions.R` | Formal actions and facilities | `output/explore/formal-actions/` |
-| `06_explore-informal.R` | Informal actions and facilities | `output/explore/informal/` |
-| `07_explore-pollutants.R` | Pollutants and facilities | `output/explore/pollutants/` |
-| `08_explore-stack-tests.R` | Stack tests and facilities | `output/explore/stack-tests/` |
-| `09_explore-pipeline.R` | ECHO pipeline plus related ICIS-Air tables | `output/explore/pipeline/` |
-| `10_frs-crosswalk.R` | AFS facilities, ICIS-Air facilities, and FRS program links | `output/explore/frs_crosswalk/` |
+| `01_explore-facilities.R` | `ICIS-AIR_FACILITIES.csv` | `output/explore_tabulations/facilities/` |
+| `02_explore-programs.R` | Programs and facilities | `output/explore_tabulations/programs/` |
+| `03_explore-violations.R` | Violation history and facilities | `output/explore_tabulations/violations/` |
+| `04_explore-compliance.R` | FCE/PCE evaluations and facilities | `output/explore_tabulations/compliance/` |
+| `05_explore-formal-actions.R` | Formal actions and facilities | `output/explore_tabulations/formal-actions/` |
+| `06_explore-informal.R` | Informal actions and facilities | `output/explore_tabulations/informal/` |
+| `07_explore-pollutants.R` | Pollutants and facilities | `output/explore_tabulations/pollutants/` |
+| `08_explore-stack-tests.R` | Stack tests and facilities | `output/explore_tabulations/stack-tests/` |
+| `09_explore-pipeline.R` | ECHO pipeline plus related ICIS-Air tables | `output/explore_tabulations/pipeline/` |
+| `10_frs-crosswalk.R` | AFS facilities, ICIS-Air facilities, and FRS program links | `output/explore_tabulations/frs_crosswalk/` |
 
 The FRS crosswalk script is the only exploratory script that needs `data/frs_downloads/FRS_PROGRAM_LINKS.csv`. It maps legacy `AFS_ID` values to modern ICIS-Air `PGM_SYS_ID` values through `REGISTRY_ID`.
 

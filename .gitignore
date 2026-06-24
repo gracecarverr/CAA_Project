@@ -16,6 +16,9 @@ config/gsheet_config.R
 # FRS bulk download — large source data (FRS_PROGRAM_LINKS.csv & FRS_FACILITIES.csv exceed GitHub's 100MB limit)
 data/frs_downloads/
 
+# Superseded exploratory outputs
+output/retired/
+
 # Excel temporary lock files
 ~$*.xlsx
 
