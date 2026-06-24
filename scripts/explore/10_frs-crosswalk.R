@@ -238,3 +238,4 @@ cat("\n====== DONE ======\n")
 cat("AFS facilities reaching an ICIS-Air id (end to end):", coverage$afs_with_any_icis_id,
     "(", coverage$pct_afs_reaching_icis, "% of all AFS facilities)\n")
 cat("Outputs written to:", out_dir, "\n")
+
