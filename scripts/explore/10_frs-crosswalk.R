@@ -39,12 +39,15 @@
 #       loading three columns instead of thirteen keeps memory and time reasonable.
 #
 # WHAT ~70% COVERAGE MEANS (and what it does NOT)
-#   Hop 1 links ~70% of AFS facilities to a REGISTRY_ID (164,935 of 236,734 in our run). This is a *coverage*
-#   ceiling set by FRS, not a matching defect: among facilities that exist in FRS the match is essentially
-#   exact and ~1:1 (only 208 of 164,935 linked AFS_IDs — 0.13% — map to >1 REGISTRY_ID). Section 4 confirms
-#   the unmatched ~30% are
-#   genuinely ABSENT from the FRS air-program list (0% of a sampled set appear anywhere in the AIR ids), and
-#   that they skew toward closed/inactive facilities (operating status "O" matches at ~73%, "X" at ~58%).
+#   Hop 1 links ~70% of AFS facilities to a REGISTRY_ID (164,935 of 236,734 in our run). This is the coverage
+#   provided by recognizable legacy AFS identifiers in the current FRS AIR links. For identifiers that do
+#   link, the mapping is essentially exact and ~1:1 (only 208 of 164,935 linked AFS_IDs — 0.13% — map to
+#   >1 REGISTRY_ID). Section 4 confirms
+#   that the unmatched ~30% do not carry their recognizable 10-character AFS_ID anywhere in the tested FRS
+#   AIR identifiers (0% of a sampled set appear as a substring). That does NOT mean the physical facilities
+#   are absent from FRS: Sections 7-10 search for same-name/address candidates under other identifiers.
+#   The unmatched group also skews toward closed/inactive facilities (operating status "O" matches at ~73%,
+#   "X" at ~58%), but this pattern alone does not establish why an individual identifier is missing.
 #
 # INPUTS
 #   data/raw/afs_downloads/AFS_FACILITIES.csv                 (AFS_ID, OPERATING_STATUS, ...)        [in repo]
@@ -58,11 +61,28 @@
 # OUTPUTS  (output/explore_tabulations/frs_crosswalk/)
 #   afs_to_icis_crosswalk.csv   one row per linked AFS facility: AFS_ID, REGISTRY_ID, ICIS PGM_SYS_ID(s)
 #   crosswalk_coverage.csv      one-row coverage summary (counts and percentages for each hop)
+#   unmatched_afs_records.csv   unmatched AFS facilities and their original identifying information
+#   unmatched_afs_by_status.csv unmatched counts and rates by AFS operating status
+#   unmatched_afs_by_state.csv  unmatched counts and rates by state
+#   unmatched_afs_exact_frs_candidates.csv
+#                              exact-after-formatting FRS candidates; these are evidence, NOT accepted matches
+#   unmatched_afs_exact_icis_candidates.csv
+#                              exact-after-formatting ICIS candidates; these are evidence, NOT accepted matches
+#   unmatched_afs_candidate_summary.csv
+#                              one row per unmatched AFS_ID with candidate counts and evidence flags
+#   unmatched_afs_investigation_summary.csv
+#                              aggregate counts describing what the exact candidate search found
 #
 # REPRODUCIBILITY
 #   Exploratory only — not part of the analysis pipeline (00_run_all.R). Paths resolve via here::here().
 #   Raw inputs are never modified. The one stochastic step (the unmatched-substring diagnostic, which samples
 #   ids for speed) sets a seed so the reported number is reproducible.
+#
+# IMPORTANT INTERPRETATION RULE
+#   Sections 7-10 investigate the unmatched AFS records using names, addresses, and geography. They deliberately
+#   do NOT add any inferred matches to the crosswalk. Even an exact normalized name/address agreement can refer
+#   to the wrong facility (for example, a company can operate several sites with similar names). Candidate pairs
+#   must be reviewed, and any fuzzy-matching or acceptance rule must be approved before it is implemented.
 # =========================================================================================================
 
 library(here)
@@ -172,14 +192,15 @@ multi <- afs_to_reg |> count(AFS_ID, name = "n_reg") |> filter(n_reg > 1)
 cat("AFS_IDs mapping to >1 REGISTRY_ID (ambiguous):", nrow(multi),
     "(", round(nrow(multi) / length(linked_afs) * 100, 2), "% of linked)\n")
 
-# Are the unmatched facilities genuinely absent from FRS, or just stored under a different id?
+# Are the unmatched AFS identifiers stored somewhere else inside the FRS AIR identifier strings?
 # Search a seeded sample of unmatched AFS_IDs for appearance ANYWHERE inside any AIR id.
 unmatched <- setdiff(afs_ids, linked_afs)
 samp <- sample(unmatched, min(2000L, length(unmatched)))
 hits <- vapply(samp, function(a) any(grepl(a, air$PGM_SYS_ID, fixed = TRUE)), logical(1))
 cat("\nUnmatched AFS facilities:", length(unmatched), "\n")
 cat("Of", length(samp), "sampled, found as a substring anywhere in the AIR ids:",
-    sum(hits), "(", round(mean(hits) * 100, 1), "%) -> ~0% confirms they are absent from FRS, not mis-keyed\n")
+    sum(hits), "(", round(mean(hits) * 100, 1),
+    "%) -> their AFS identifiers are absent from the tested AIR ids; this does not prove the facilities are absent\n")
 
 # Do the unmatched skew toward closed/inactive facilities? (context for the coverage gap)
 cat("\n-- Match rate by AFS OPERATING_STATUS --\n")
@@ -216,21 +237,30 @@ crosswalk <- afs_to_reg |>
   left_join(reg_to_icis, by = "REGISTRY_ID", relationship = "many-to-many") |>
   group_by(AFS_ID, REGISTRY_ID) |>
   summarise(
-    ICIS_PGM_SYS_ID = paste(sort(unique(ICIS_PGM_SYS_ID[!is.na(ICIS_PGM_SYS_ID)])), collapse = ";"),
+    # Count the individual ids before replacing the column with one collapsed text string.
     n_icis_ids      = n_distinct(ICIS_PGM_SYS_ID[!is.na(ICIS_PGM_SYS_ID)]),
+    ICIS_PGM_SYS_ID = paste(sort(unique(ICIS_PGM_SYS_ID[!is.na(ICIS_PGM_SYS_ID)])), collapse = ";"),
     .groups = "drop"
   ) |>
+  select(AFS_ID, REGISTRY_ID, ICIS_PGM_SYS_ID, n_icis_ids) |>
   arrange(AFS_ID)
 
 write_csv(crosswalk, file.path(out_dir, "afs_to_icis_crosswalk.csv"))
+
+# Count unique AFS facilities, not crosswalk rows: the 208 AFS ids linked to multiple REGISTRY_IDs
+# otherwise appear more than once and would slightly inflate the end-to-end coverage statistic.
+afs_reaching_icis <- crosswalk |>
+  filter(n_icis_ids > 0) |>
+  summarise(n = n_distinct(AFS_ID)) |>
+  pull(n)
 
 coverage <- tibble(
   afs_facilities_total    = length(afs_ids),
   afs_linked_to_registry  = length(linked_afs),
   pct_afs_linked          = round(length(linked_afs) / length(afs_ids) * 100, 1),
   afs_ambiguous_multi_reg = nrow(multi),
-  afs_with_any_icis_id    = sum(crosswalk$n_icis_ids > 0),
-  pct_afs_reaching_icis   = round(sum(crosswalk$n_icis_ids > 0) / length(afs_ids) * 100, 1)
+  afs_with_any_icis_id    = afs_reaching_icis,
+  pct_afs_reaching_icis   = round(afs_reaching_icis / length(afs_ids) * 100, 1)
 )
 write_csv(coverage, file.path(out_dir, "crosswalk_coverage.csv"))
 
@@ -238,3 +268,432 @@ cat("\n====== DONE ======\n")
 cat("AFS facilities reaching an ICIS-Air id (end to end):", coverage$afs_with_any_icis_id,
     "(", coverage$pct_afs_reaching_icis, "% of all AFS facilities)\n")
 cat("Outputs written to:", out_dir, "\n")
+
+# ============================================================================================
+# 7. PROFILE THE UNMATCHED AFS FACILITIES
+#
+# PURPOSE
+#   The 30% coverage gap can arise for several different reasons: older closed records may never
+#   have been migrated to FRS; an AFS identifier may be missing even though the physical facility
+#   exists in FRS; or the record may have changed name/address over time. Before considering any
+#   inferred linkage, save the unmatched records and show where the gap is concentrated.
+#
+# DECISION
+#   These tables describe observed differences only. A lower match rate for a group is evidence
+#   of unequal coverage, not proof of the administrative reason for that difference.
+# ============================================================================================
+
+unmatched_afs <- afs |>
+  filter(AFS_ID %in% unmatched) |>
+  select(
+    AFS_ID, PLANT_ID, PLANT_NAME, PLANT_STREET_ADDRESS, PLANT_CITY, PLANT_COUNTY,
+    STATE, ZIP_CODE, EPA_REGION, PRIMARY_SIC_CODE, SECONDARY_SIC_CODE, NAICS_CODE,
+    EPA_CLASSIFICATION_CODE, OPERATING_STATUS, FEDERALLY_REPORTABLE
+  ) |>
+  arrange(AFS_ID)
+
+write_csv(unmatched_afs, file.path(out_dir, "unmatched_afs_records.csv"))
+
+match_status <- afs |>
+  distinct(AFS_ID, OPERATING_STATUS) |>
+  mutate(is_matched = AFS_ID %in% linked_afs) |>
+  group_by(OPERATING_STATUS) |>
+  summarise(
+    afs_facilities = n(),
+    matched_to_frs = sum(is_matched),
+    unmatched      = sum(!is_matched),
+    pct_matched    = round(matched_to_frs / afs_facilities * 100, 1),
+    pct_unmatched  = round(unmatched / afs_facilities * 100, 1),
+    .groups = "drop"
+  ) |>
+  arrange(desc(afs_facilities))
+
+match_state <- afs |>
+  distinct(AFS_ID, STATE) |>
+  mutate(is_matched = AFS_ID %in% linked_afs) |>
+  group_by(STATE) |>
+  summarise(
+    afs_facilities = n(),
+    matched_to_frs = sum(is_matched),
+    unmatched      = sum(!is_matched),
+    pct_matched    = round(matched_to_frs / afs_facilities * 100, 1),
+    pct_unmatched  = round(unmatched / afs_facilities * 100, 1),
+    .groups = "drop"
+  ) |>
+  arrange(desc(unmatched))
+
+write_csv(match_status, file.path(out_dir, "unmatched_afs_by_status.csv"))
+write_csv(match_state,  file.path(out_dir, "unmatched_afs_by_state.csv"))
+
+# ============================================================================================
+# 8. CREATE CONSERVATIVELY STANDARDIZED COMPARISON FIELDS
+#
+# PURPOSE
+#   Formatting differences such as capitalization, punctuation, repeated spaces, or ZIP+4 should
+#   not prevent an otherwise exact comparison.
+#
+# DECISIONS
+#   - Convert text to uppercase, replace punctuation with spaces, and collapse repeated whitespace.
+#   - Compare only the first five ZIP-code digits.
+#   - Do NOT remove company suffixes ("INC", "LLC"), expand street abbreviations, correct spelling,
+#     or calculate fuzzy similarity. Those operations require judgment and can create false matches.
+#   - Blank values are kept as NA and are never allowed to form a candidate key.
+# ============================================================================================
+
+normalize_text <- function(x) {
+  x <- toupper(trimws(x))
+  x <- gsub("[[:punct:]]+", " ", x)
+  x <- gsub("[[:space:]]+", " ", x)
+  x[x == ""] <- NA_character_
+  x
+}
+
+normalize_zip5 <- function(x) {
+  x <- gsub("[^0-9]", "", x)
+  x <- substr(x, 1, 5)
+  x[nchar(x) != 5] <- NA_character_
+  x
+}
+
+unmatched_std <- unmatched_afs |>
+  mutate(
+    name_std    = normalize_text(PLANT_NAME),
+    address_std = normalize_text(PLANT_STREET_ADDRESS),
+    city_std    = normalize_text(PLANT_CITY),
+    state_std   = normalize_text(STATE),
+    zip5        = normalize_zip5(ZIP_CODE)
+  )
+
+# Keep a compact registry-to-program lookup before releasing the large full FRS program-link table.
+# This lets the candidate output distinguish registries with an AIR link from those represented only
+# in another EPA program. Presence in another program is useful evidence, but is not itself a match.
+registry_programs <- frs |>
+  filter(!is.na(REGISTRY_ID), !is.na(PGM_SYS_ACRNM)) |>
+  distinct(REGISTRY_ID, PGM_SYS_ACRNM)
+
+rm(cmp, air18, air, frs)
+invisible(gc())
+
+# Load the canonical FRS facility file separately. Reading only needed columns limits memory use.
+frs_facilities_path <- here("data/frs_downloads/FRS_FACILITIES.csv")
+if (!file.exists(frs_facilities_path)) {
+  stop("FRS_FACILITIES.csv not found at ", frs_facilities_path, ".\n",
+       "It is needed only for the unmatched-record investigation in Sections 8-10.",
+       call. = FALSE)
+}
+
+frs_facilities <- read_csv(
+  frs_facilities_path,
+  col_select = c(
+    REGISTRY_ID, FAC_NAME, FAC_STREET, FAC_CITY, FAC_STATE, FAC_ZIP,
+    FAC_COUNTY, FAC_EPA_REGION
+  ),
+  col_types = cols(.default = col_character()),
+  show_col_types = FALSE
+) |>
+  filter(!is.na(REGISTRY_ID)) |>
+  distinct(REGISTRY_ID, .keep_all = TRUE) |>
+  mutate(
+    name_std    = normalize_text(FAC_NAME),
+    address_std = normalize_text(FAC_STREET),
+    city_std    = normalize_text(FAC_CITY),
+    state_std   = normalize_text(FAC_STATE),
+    zip5        = normalize_zip5(FAC_ZIP)
+  )
+
+# ============================================================================================
+# 9. FIND EXACT-AFTER-FORMATTING FRS CANDIDATES
+#
+# A candidate is created when an unmatched AFS record and an FRS facility agree on at least one
+# conservative key:
+#   A. facility name + state + ZIP5
+#   B. street address + state + ZIP5
+#   C. facility name + city + state
+#
+# WHY THREE KEYS
+#   No single field is complete or unique. Requiring several fields within each key avoids broad
+#   name-only or address-only comparisons, while the three alternatives allow for one missing field.
+#
+# IMPORTANT
+#   These are candidate records, not accepted links. A generic name or shared business address can
+#   produce multiple candidates. The output records every rule that generated each candidate so a
+#   reviewer can evaluate the evidence.
+# ============================================================================================
+
+candidate_name_zip <- unmatched_std |>
+  filter(!is.na(name_std), !is.na(state_std), !is.na(zip5)) |>
+  select(AFS_ID, name_std, state_std, zip5) |>
+  inner_join(
+    frs_facilities |>
+      filter(!is.na(name_std), !is.na(state_std), !is.na(zip5)) |>
+      select(REGISTRY_ID, name_std, state_std, zip5),
+    by = c("name_std", "state_std", "zip5"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_name_state_zip5")
+
+candidate_address_zip <- unmatched_std |>
+  filter(!is.na(address_std), !is.na(state_std), !is.na(zip5)) |>
+  select(AFS_ID, address_std, state_std, zip5) |>
+  inner_join(
+    frs_facilities |>
+      filter(!is.na(address_std), !is.na(state_std), !is.na(zip5)) |>
+      select(REGISTRY_ID, address_std, state_std, zip5),
+    by = c("address_std", "state_std", "zip5"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_address_state_zip5")
+
+candidate_name_city <- unmatched_std |>
+  filter(!is.na(name_std), !is.na(city_std), !is.na(state_std)) |>
+  select(AFS_ID, name_std, city_std, state_std) |>
+  inner_join(
+    frs_facilities |>
+      filter(!is.na(name_std), !is.na(city_std), !is.na(state_std)) |>
+      select(REGISTRY_ID, name_std, city_std, state_std),
+    by = c("name_std", "city_std", "state_std"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_name_city_state")
+
+frs_candidate_keys <- bind_rows(
+  candidate_name_zip,
+  candidate_address_zip,
+  candidate_name_city
+) |>
+  group_by(AFS_ID, REGISTRY_ID) |>
+  summarise(
+    candidate_rules = paste(sort(unique(candidate_rule)), collapse = ";"),
+    n_candidate_rules = n_distinct(candidate_rule),
+    .groups = "drop"
+  )
+
+candidate_registry_programs <- registry_programs |>
+  semi_join(frs_candidate_keys, by = "REGISTRY_ID") |>
+  group_by(REGISTRY_ID) |>
+  summarise(
+    frs_programs = paste(sort(unique(PGM_SYS_ACRNM)), collapse = ";"),
+    has_air_program_link = any(PGM_SYS_ACRNM == "AIR"),
+    .groups = "drop"
+  )
+
+candidate_registry_icis <- reg_to_icis |>
+  semi_join(frs_candidate_keys, by = "REGISTRY_ID") |>
+  group_by(REGISTRY_ID) |>
+  summarise(
+    ICIS_PGM_SYS_ID = paste(sort(unique(ICIS_PGM_SYS_ID)), collapse = ";"),
+    n_icis_ids = n_distinct(ICIS_PGM_SYS_ID),
+    .groups = "drop"
+  )
+
+frs_candidates <- frs_candidate_keys |>
+  left_join(
+    unmatched_afs |>
+      select(
+        AFS_ID, AFS_NAME = PLANT_NAME, AFS_ADDRESS = PLANT_STREET_ADDRESS,
+        AFS_CITY = PLANT_CITY, AFS_STATE = STATE, AFS_ZIP = ZIP_CODE,
+        AFS_STATUS = OPERATING_STATUS
+      ),
+    by = "AFS_ID"
+  ) |>
+  left_join(
+    frs_facilities |>
+      select(
+        REGISTRY_ID, FRS_NAME = FAC_NAME, FRS_ADDRESS = FAC_STREET,
+        FRS_CITY = FAC_CITY, FRS_STATE = FAC_STATE, FRS_ZIP = FAC_ZIP,
+        FRS_COUNTY = FAC_COUNTY
+      ),
+    by = "REGISTRY_ID"
+  ) |>
+  left_join(candidate_registry_programs, by = "REGISTRY_ID") |>
+  left_join(candidate_registry_icis, by = "REGISTRY_ID") |>
+  mutate(
+    has_air_program_link = coalesce(has_air_program_link, FALSE),
+    n_icis_ids = coalesce(n_icis_ids, 0L),
+    has_icis_id = n_icis_ids > 0
+  ) |>
+  arrange(AFS_ID, desc(n_candidate_rules), REGISTRY_ID)
+
+write_csv(
+  frs_candidates,
+  file.path(out_dir, "unmatched_afs_exact_frs_candidates.csv")
+)
+
+# ============================================================================================
+# 10. CHECK FOR DIRECT EXACT-AFTER-FORMATTING ICIS-AIR CANDIDATES
+#
+# PURPOSE
+#   An unmatched AFS facility might resemble an ICIS-Air facility even when its formal AFS identifier
+#   is absent from FRS. This repeats the same conservative exact-key search directly against ICIS-Air.
+#
+# IMPORTANT
+#   These records also remain candidates only. The script does not use them to alter the crosswalk.
+# ============================================================================================
+
+icis_std <- icis |>
+  filter(!is.na(PGM_SYS_ID)) |>
+  distinct(PGM_SYS_ID, .keep_all = TRUE) |>
+  mutate(
+    name_std    = normalize_text(FACILITY_NAME),
+    address_std = normalize_text(STREET_ADDRESS),
+    city_std    = normalize_text(CITY),
+    state_std   = normalize_text(STATE),
+    zip5        = normalize_zip5(ZIP_CODE)
+  )
+
+icis_candidate_name_zip <- unmatched_std |>
+  filter(!is.na(name_std), !is.na(state_std), !is.na(zip5)) |>
+  select(AFS_ID, name_std, state_std, zip5) |>
+  inner_join(
+    icis_std |>
+      filter(!is.na(name_std), !is.na(state_std), !is.na(zip5)) |>
+      select(PGM_SYS_ID, REGISTRY_ID, name_std, state_std, zip5),
+    by = c("name_std", "state_std", "zip5"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, PGM_SYS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_name_state_zip5")
+
+icis_candidate_address_zip <- unmatched_std |>
+  filter(!is.na(address_std), !is.na(state_std), !is.na(zip5)) |>
+  select(AFS_ID, address_std, state_std, zip5) |>
+  inner_join(
+    icis_std |>
+      filter(!is.na(address_std), !is.na(state_std), !is.na(zip5)) |>
+      select(PGM_SYS_ID, REGISTRY_ID, address_std, state_std, zip5),
+    by = c("address_std", "state_std", "zip5"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, PGM_SYS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_address_state_zip5")
+
+icis_candidate_name_city <- unmatched_std |>
+  filter(!is.na(name_std), !is.na(city_std), !is.na(state_std)) |>
+  select(AFS_ID, name_std, city_std, state_std) |>
+  inner_join(
+    icis_std |>
+      filter(!is.na(name_std), !is.na(city_std), !is.na(state_std)) |>
+      select(PGM_SYS_ID, REGISTRY_ID, name_std, city_std, state_std),
+    by = c("name_std", "city_std", "state_std"),
+    relationship = "many-to-many"
+  ) |>
+  distinct(AFS_ID, PGM_SYS_ID, REGISTRY_ID) |>
+  mutate(candidate_rule = "exact_name_city_state")
+
+icis_candidate_keys <- bind_rows(
+  icis_candidate_name_zip,
+  icis_candidate_address_zip,
+  icis_candidate_name_city
+) |>
+  group_by(AFS_ID, PGM_SYS_ID, REGISTRY_ID) |>
+  summarise(
+    candidate_rules = paste(sort(unique(candidate_rule)), collapse = ";"),
+    n_candidate_rules = n_distinct(candidate_rule),
+    .groups = "drop"
+  )
+
+icis_candidates <- icis_candidate_keys |>
+  left_join(
+    unmatched_afs |>
+      select(
+        AFS_ID, AFS_NAME = PLANT_NAME, AFS_ADDRESS = PLANT_STREET_ADDRESS,
+        AFS_CITY = PLANT_CITY, AFS_STATE = STATE, AFS_ZIP = ZIP_CODE,
+        AFS_STATUS = OPERATING_STATUS
+      ),
+    by = "AFS_ID"
+  ) |>
+  left_join(
+    icis |>
+      transmute(
+        PGM_SYS_ID, REGISTRY_ID,
+        ICIS_NAME = FACILITY_NAME, ICIS_ADDRESS = STREET_ADDRESS,
+        ICIS_CITY = CITY, ICIS_STATE = STATE, ICIS_ZIP = ZIP_CODE
+      ) |>
+      distinct(PGM_SYS_ID, REGISTRY_ID, .keep_all = TRUE),
+    by = c("PGM_SYS_ID", "REGISTRY_ID")
+  ) |>
+  arrange(AFS_ID, desc(n_candidate_rules), PGM_SYS_ID)
+
+write_csv(
+  icis_candidates,
+  file.path(out_dir, "unmatched_afs_exact_icis_candidates.csv")
+)
+
+# One-row-per-AFS summary for triage. Counts describe available candidates; they do not say that a
+# candidate is correct. In particular, "one candidate" is not automatically a verified match.
+candidate_summary <- unmatched_afs |>
+  distinct(AFS_ID) |>
+  left_join(
+    frs_candidates |>
+      group_by(AFS_ID) |>
+      summarise(
+        n_exact_frs_candidates = n_distinct(REGISTRY_ID),
+        n_exact_frs_candidates_with_air = n_distinct(REGISTRY_ID[has_air_program_link]),
+        n_exact_frs_candidates_with_icis = n_distinct(REGISTRY_ID[has_icis_id]),
+        max_frs_candidate_rules = max(n_candidate_rules),
+        .groups = "drop"
+      ),
+    by = "AFS_ID"
+  ) |>
+  left_join(
+    icis_candidates |>
+      group_by(AFS_ID) |>
+      summarise(
+        n_exact_icis_candidates = n_distinct(PGM_SYS_ID),
+        max_icis_candidate_rules = max(n_candidate_rules),
+        .groups = "drop"
+      ),
+    by = "AFS_ID"
+  ) |>
+  mutate(
+    across(starts_with("n_"), ~ coalesce(.x, 0L)),
+    across(starts_with("max_"), ~ coalesce(.x, 0L)),
+    has_any_exact_frs_candidate = n_exact_frs_candidates > 0,
+    has_any_exact_icis_candidate = n_exact_icis_candidates > 0
+  ) |>
+  arrange(AFS_ID)
+
+write_csv(
+  candidate_summary,
+  file.path(out_dir, "unmatched_afs_candidate_summary.csv")
+)
+
+investigation_summary <- tibble(
+  measure = c(
+    "unmatched_afs_total",
+    "with_any_exact_frs_candidate",
+    "with_exactly_one_frs_candidate",
+    "with_multiple_exact_frs_candidates",
+    "with_exact_frs_candidate_having_air_link",
+    "with_exact_frs_candidate_having_icis_id",
+    "with_any_exact_direct_icis_candidate",
+    "with_no_exact_frs_or_icis_candidate"
+  ),
+  n_afs_ids = c(
+    nrow(candidate_summary),
+    sum(candidate_summary$n_exact_frs_candidates > 0),
+    sum(candidate_summary$n_exact_frs_candidates == 1),
+    sum(candidate_summary$n_exact_frs_candidates > 1),
+    sum(candidate_summary$n_exact_frs_candidates_with_air > 0),
+    sum(candidate_summary$n_exact_frs_candidates_with_icis > 0),
+    sum(candidate_summary$n_exact_icis_candidates > 0),
+    sum(
+      candidate_summary$n_exact_frs_candidates == 0 &
+      candidate_summary$n_exact_icis_candidates == 0
+    )
+  )
+) |>
+  mutate(pct_of_unmatched = round(n_afs_ids / nrow(candidate_summary) * 100, 1))
+
+write_csv(
+  investigation_summary,
+  file.path(out_dir, "unmatched_afs_investigation_summary.csv")
+)
+
+cat("\n====== UNMATCHED-RECORD INVESTIGATION ======\n")
+print(investigation_summary, n = Inf)
+cat("\nNo name/address candidate was added to the crosswalk.\n")
+cat("Review the candidate files before approving any fuzzy matching or acceptance rule.\n")

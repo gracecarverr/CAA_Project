@@ -1,0 +1,9 @@
+measure,n_afs_ids,pct_of_unmatched
+unmatched_afs_total,71799,100
+with_any_exact_frs_candidate,51091,71.2
+with_exactly_one_frs_candidate,40957,57
+with_multiple_exact_frs_candidates,10134,14.1
+with_exact_frs_candidate_having_air_link,44305,61.7
+with_exact_frs_candidate_having_icis_id,44304,61.7
+with_any_exact_direct_icis_candidate,48784,67.9
+with_no_exact_frs_or_icis_candidate,15462,21.5
