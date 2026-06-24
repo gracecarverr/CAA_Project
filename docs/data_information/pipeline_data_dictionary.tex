@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+
+\newcolumntype{F}{>{\ttfamily\footnotesize}p{0.30\textwidth}}
+\newcolumntype{D}{>{\footnotesize}p{0.60\textwidth}}
+
+\title{CAA Compliance Pipeline Data Dictionary}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent File: \texttt{PIPELINE\_CAA\_00\_COMPLETE.csv}. Source: EPA ECHO, CAA Pipeline Download
+Summary, \url{https://echo.epa.gov/tools/data-downloads/caa-pipeline-download-summary}.
+
+\medskip
+\noindent\textbf{What it is.} Per EPA, the pipeline ``shows links between Compliance Monitoring
+Activities (CMA) to any related violations and/or enforcement actions'' --- i.e.\ it pre-joins, in a
+single row, a violation to its triggering evaluation and resulting enforcement action, a linkage not
+available in the individual ICIS-Air tables. The narrative structure and caveats are documented
+separately in \texttt{pipeline\_brief.tex}; this file documents the 35 columns.
+
+\medskip
+\noindent\textbf{Conventions used below.} ``\emph{EPA}'' marks a definition quoted from EPA's pipeline
+documentation; ``\emph{data}'' marks a fact verified directly against the file. The file has 66,655 rows;
+\texttt{FOUND\_VIOLATION = Y} for every row (\emph{data}).
+
+\section*{Identification and row-level flags}
+\begin{longtable}{F D}
+\toprule
+Field & Description \\ \midrule \endhead
+SORT\_ORDER & EPA internal ordering of pipeline rows \\
+SORT\_DATE & Date used for EPA's internal ordering \\
+SOURCE\_ID & Facility identifier (ICIS-Air \texttt{PGM\_SYS\_ID}) \\
+REGISTRY\_ID & Facility Registry Service (FRS) ID \\
+AIR\_NAME & Facility name \\
+PIPELINE\_FLAG & \emph{EPA:} ``an internally generated flag to indicate at least [one] violation
+(\texttt{VIOL\_ACTIVITY\_ID}) linked to an evaluation and/or enforcement action.'' \emph{Data:} values
+Y/N \\
+OFFICIAL\_FLAG & \emph{EPA:} ``this flag is set to `Y' when an entry is counted as compliance monitoring
+strategy activities.'' \\
+\bottomrule
+\end{longtable}
+
+\section*{Evaluation block (the compliance-monitoring activity)}
+\begin{longtable}{F D}
+\toprule
+Field & Description \\ \midrule \endhead
+EVAL\_FLAG & \emph{EPA:} ``an internally generated flag to indicate if there is at least one Compliance
+Monitoring Activity (CMA) (evaluation) [linked] to the violation activity id.'' \\
+EVAL\_SORT\_ORDER & Internal ordering of the evaluation within the row \\
+EVAL\_ACTIVITY\_ID & Evaluation activity identifier. \emph{Data:} a sentinel value \texttt{-9999} is used
+where no evaluation is linked \\
+EVAL\_TYPE\_DESC & Evaluation type (e.g.\ FCE/PCE variants, Investigation, Self-Disclosure). \emph{Data:}
+includes a ``Self-Disclosure'' category \\
+EVAL\_LEAD\_AGENCY & Lead agency for the evaluation (EPA / State / Local) \\
+EVAL\_DATE & Date of the evaluation \\
+\bottomrule
+\end{longtable}
+
+\section*{Violation block}
+\begin{longtable}{F D}
+\toprule
+Field & Description \\ \midrule \endhead
+VIOL\_FLAG & Flag indicating a violation on the row \\
+VIOL\_SORT\_ORDER & Internal ordering of the violation \\
+FOUND\_VIOLATION & \emph{Data:} \texttt{Y} for all 66,655 rows \\
+VIOL\_ACTIVITY\_ID & Violation activity identifier. \emph{Data + EPA:} some rows carry system-generated
+IDs (prefixes 9906/9913) that, per EPA, ``did not have an actual violation activity identification
+number'' and were ``system generated for purposes of creating the pipeline table'' \\
+VIOL\_TYPE & Violation type. \emph{Data:} \texttt{HPV}, \texttt{FRV}, plus placeholder values (blank, and
+``Linked to Viol.\ Below'') on the system-generated rows \\
+VIOL\_TYPE\_SORT & Internal ordering by violation type \\
+VIOL\_LEAD\_AGENCY & Lead agency for the violation (EPA / State / Local; often blank on placeholder rows) \\
+VIOL\_PROGRAMS & Regulatory program(s) violated \\
+VIOL\_POLLUTANT\_CODES / VIOL\_POLLUTANT\_DESCS & Pollutant code(s) and description(s) \\
+VIOL\_START\_DATE & Violation start date \\
+VIOL\_END\_DATE & Violation end/resolution date (text field, mixed format) \\
+VIOL\_END\_DATE\_DATE & Parsed date version of \texttt{VIOL\_END\_DATE} \\
+\bottomrule
+\end{longtable}
+
+\section*{Enforcement-action block}
+\begin{longtable}{F D}
+\toprule
+Field & Description \\ \midrule \endhead
+EA\_FLAG & Flag indicating an enforcement action on the row \\
+EA\_SORT\_ORDER & Internal ordering of the enforcement action \\
+EA\_ACTIVITY\_ID & Enforcement-action activity identifier \\
+EA\_FEA\_ACTIVITY\_ID & Separate identifier for the formal enforcement action \\
+EA\_TYPE & Enforcement-action type (e.g.\ Notice of Violation, Administrative -- Formal, Judicial) \\
+EA\_DATE & Enforcement-action date \\
+FEA\_ISSUE\_DATE\_FLAG & Flag for the formal-enforcement-action issue date \\
+EA\_PENALTY\_AMT & Monetary penalty. \emph{Data:} non-zero on 14{,}427 rows \\
+EA\_COMP\_ACTION\_COST & Supplemental compliance / environmental-project cost. \emph{Data:} non-zero on
+94 rows \\
+\bottomrule
+\end{longtable}
+
+\noindent\textbf{Lead-agency note (\emph{data}).} There is no enforcement-action-level lead-agency
+field; the only lead-agency columns are \texttt{EVAL\_LEAD\_AGENCY} and \texttt{VIOL\_LEAD\_AGENCY}.
+Of the 94 non-zero \texttt{EA\_COMP\_ACTION\_COST} rows, 83 have a blank \texttt{VIOL\_LEAD\_AGENCY},
+so agency attribution via that field is incomplete.
+
+\end{document}
