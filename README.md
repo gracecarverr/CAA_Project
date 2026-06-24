@@ -1,171 +1,203 @@
-# Data Availability and Provenance Statements, and Instructions for Replicators
+# Clean Air Act Administrative Data Project
 
-> INSTRUCTIONS: This README follows the [AEA template README](https://social-science-data-editors.github.io/template_README/) for social science replication packages. This project is in the exploratory/pre-analysis phase. Sections will be updated as the project develops.
+This repository contains exploratory R code and reference materials for studying U.S. EPA Clean Air Act (CAA) stationary-source regulation. It works with current ICIS-Air records, the legacy Air Facility System (AFS), ECHO pipeline and emissions exports, and Facility Registry Service (FRS) identifiers.
 
-## Overview
+The repository is not yet a finished replication package or a final analysis. Its current products are:
 
-This project uses EPA administrative data on Clean Air Act stationary source regulation to study [research question TBD]. The data cover facility characteristics, regulatory program participation, compliance monitoring, violation history, and enforcement actions for the universe of CAA-regulated stationary sources in the United States.
+- exploratory summaries of the major ICIS-Air datasets;
+- formatted Excel data dictionaries for ICIS-Air, AFS, emissions, and pipeline files;
+- an AFS-to-ICIS-Air facility crosswalk built through FRS; and
+- a balanced 2015–2025 facility-year skeleton for major Title V electric utilities.
 
-All code is in R. Exploratory scripts profile each dataset (CSV summaries and Excel data-dictionary workbooks). No paper tables have been finalized yet.
+Raw EPA downloads are intentionally excluded from Git because they are large. Generated summaries, reference PDFs, and the current derived panel files are tracked.
 
-## Data Availability and Provenance Statements
+## Quick start
 
-### Summary of Availability
+### 1. Install R packages
 
-- [x] All data are publicly available.
+Use R 4.x and install the packages used across the repository:
 
-All data used in this project are downloaded from the U.S. Environmental Protection Agency's Enforcement and Compliance History Online (ECHO) system. No restricted or confidential data are used.
-
-### ICIS-Air Data
-
-Data on CAA-regulated facilities, programs, compliance monitoring, violations, and enforcement actions.
-
-- **Source:** U.S. EPA, Enforcement and Compliance History Online (ECHO), ICIS-Air module
-- **URL:** https://echo.epa.gov/tools/data-downloads/icis-air-download-summary
-- **Access:** Public. No registration required. Bulk CSV download.
-- **Time coverage:** Current as of download date.
-- **Citation:** U.S. Environmental Protection Agency. ICIS-Air Data Downloads. Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads/icis-air-download-summary
-
-### AFS Data (Air Facility System)
-
-Legacy data on CAA-regulated facilities, frozen as of October 17, 2014. AFS was the predecessor system to ICIS-Air.
-
-- **Source:** U.S. EPA, Enforcement and Compliance History Online (ECHO), AFS archive
-- **URL:** https://echo.epa.gov/tools/data-downloads#afs
-- **Access:** Public. No registration required. Bulk CSV download.
-- **Time coverage:** Frozen at October 17, 2014.
-- **Citation:** U.S. Environmental Protection Agency. AFS Data Downloads. Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads#afs
-
-### Emissions Data
-
-Facility-level pollutant emissions from the National Emissions Inventory (NEI) and other reporting programs, accessed through ECHO.
-
-- **Source:** U.S. EPA, Enforcement and Compliance History Online (ECHO), Combined Emissions data
-- **URL:** https://echo.epa.gov/tools/data-downloads#emissions
-- **Access:** Public. No registration required. Bulk CSV download.
-- **Time coverage:** Multiple NEI reporting years (2008, 2011, 2014, 2017, 2020).
-- **Citation:** U.S. Environmental Protection Agency. Combined Emissions Data Downloads. Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads#emissions
-
-### Pipeline / ECHO Exporter Data
-
-Supplementary facility-level data from ECHO.
-
-- **Source:** U.S. EPA, Enforcement and Compliance History Online (ECHO)
-- **URL:** https://echo.epa.gov/tools/data-downloads
-- **Access:** Public. No registration required.
-- **Citation:** U.S. Environmental Protection Agency. ECHO Data Downloads. https://echo.epa.gov/tools/data-downloads
-
-## Dataset List
-
-| File | Source | Notes | Provided |
-|---|---|---|---|
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_FACILITIES.csv` | ICIS-Air | Facility characteristics, classification, location | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_PROGRAMS.csv` | ICIS-Air | Regulatory program participation by source | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_FCES_PCES.csv` | ICIS-Air | Compliance monitoring (inspections) | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_VIOLATION_HISTORY.csv` | ICIS-Air | Violation records (FRV and HPV) | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_FORMAL_ACTIONS.csv` | ICIS-Air | Formal enforcement actions and penalties | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_INFORMAL_ACTIONS.csv` | ICIS-Air | Informal enforcement actions | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_POLLUTANTS.csv` | ICIS-Air | Pollutant-level records | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_PROGRAM_SUBPARTS.csv` | ICIS-Air | MACT/NSPS subpart detail | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_STACK_TESTS.csv` | ICIS-Air | Stack test results | Yes |
-| `data/raw/ICIS-AIR_downloads/ICIS-AIR_TITLEV_CERTS.csv` | ICIS-Air | Title V certification records | Yes |
-| `data/raw/afs_downloads/AFS_FACILITIES.csv` | AFS | Facility characteristics (frozen 2014) | Yes |
-| `data/raw/afs_downloads/AIR_PROGRAM.csv` | AFS | Air program records (frozen 2014) | Yes |
-| `data/raw/afs_downloads/AFS_ACTIONS.csv` | AFS | Enforcement actions (frozen 2014) | Yes |
-| `data/raw/afs_downloads/AFS_AIR_PRG_HIST_COMPLIANCE.csv` | AFS | Historical compliance (frozen 2014) | Yes |
-| `data/raw/afs_downloads/AFS_HPV_HISTORY.csv` | AFS | HPV history (frozen 2014) | Yes |
-| `data/raw/POLL_RPT_COMBINED_EMISSIONS.csv` | ECHO Emissions | Facility-level emissions, multiple NEI years | Yes |
-| `data/raw/PIPELINE_CAA_00_COMPLETE.csv` | ECHO Pipeline | Supplementary facility data | Yes |
-| `data/raw/ECHO_EXPORTER_HEADER.csv` | ECHO Exporter | Column headers for ECHO exporter | Yes |
-
-## Computational Requirements
-
-### Software Requirements
-
-- R (version 4.x)
-  - `here` (project-root-relative paths)
-  - `readr`
-  - `dplyr`
-  - `tidyr`
-  - `lubridate`
-  - `ggplot2`
-  - `scales`
-  - `patchwork`
-  - `openxlsx`
-
-All scripts resolve file paths with `here::here()`, which anchors on the project's `.git` directory.
-There is no `setwd()` to edit: run scripts with the working directory anywhere inside the repository
-(opening the project in RStudio, or `cd`-ing into the repo before running, both satisfy this).
-
-### Controlled Randomness
-
-- [x] No pseudo-random number generator is used in this project.
-
-### Memory, Runtime, and Storage Requirements
-
-- **Storage:** ~2.5 GB for raw data.
-- **Runtime:** Individual exploration scripts run in under 5 minutes each.
-- [x] Can be run on a standard desktop/laptop.
-
-## Description of Programs/Code
-
-All code is in `scripts/`. Output goes to `output/`. Raw data in `data/raw/` is never modified.
-
-### Directory Structure
-
-```
-CAA_Project/
-├── data/
-│   ├── raw/                      # Immutable raw downloads (never modified)
-│   │   ├── ICIS-AIR_downloads/   # current ICIS-Air bulk download
-│   │   ├── afs_downloads/        # legacy AFS archive (frozen 2014)
-│   │   ├── wayback_snapshots/    # archived ICIS-Air snapshots
-│   │   ├── POLL_RPT_COMBINED_EMISSIONS.csv
-│   │   ├── PIPELINE_CAA_00_COMPLETE.csv
-│   │   └── ECHO_EXPORTER_HEADER.csv
-│   └── derived/                  # Rebuilt from code
-├── scripts/
-│   ├── 00_run_all.R              # master script — checks packages, regenerates outputs, records session
-│   ├── explore/                  # 01–10: per-dataset exploratory profiling + FRS crosswalk
-│   └── tables/                   # 09_table-*: data-dictionary workbooks + 10_crosscheck
-├── output/
-│   ├── explore/                  # exploratory CSVs by dataset
-│   ├── tables/                   # data-dictionary .xlsx workbooks
-│   ├── plots/                    # diagnostic figures
-│   └── sessionInfo.txt           # package/version record (written by 00_run_all.R)
-├── docs/
-└── README.md
+```r
+install.packages(c(
+  "here", "readr", "dplyr", "tidyr", "lubridate",
+  "ggplot2", "scales", "patchwork", "openxlsx"
+))
 ```
 
-All scripts resolve paths with `here::here()` (anchored on `.git`); raw data in `data/raw/` is never modified.
+All active scripts use `here::here()` to resolve paths from the repository root. Run them from anywhere inside the cloned repository; no `setwd()` edits are needed.
 
-### Scripts
+### 2. Add the raw data
 
-| Script | Description |
-|---|---|
-| `scripts/00_run_all.R` | Master script: checks dependencies, optionally regenerates outputs, writes `sessionInfo.txt` |
-| `scripts/explore/01–10_*.R` | Per-dataset exploratory profiling + FRS crosswalk → `output/explore/` |
-| `scripts/tables/09_table-*.R` | Per-dataset data-dictionary workbooks → `output/tables/` |
-| `scripts/tables/10_crosscheck-tables.R` | QA: compares regenerated workbooks against a frozen reference set |
+Place unzipped EPA files under `data/raw/` using the layout below. These files are ignored by Git and must be downloaded separately.
 
-## Instructions to Replicators
+```text
+data/raw/
+├── ICIS-AIR_downloads/
+│   ├── ICIS-AIR_FACILITIES.csv
+│   ├── ICIS-AIR_FCES_PCES.csv
+│   ├── ICIS-AIR_FORMAL_ACTIONS.csv
+│   ├── ICIS-AIR_INFORMAL_ACTIONS.csv
+│   ├── ICIS-AIR_POLLUTANTS.csv
+│   ├── ICIS-AIR_PROGRAMS.csv
+│   ├── ICIS-AIR_PROGRAM_SUBPARTS.csv
+│   ├── ICIS-AIR_STACK_TESTS.csv
+│   ├── ICIS-AIR_TITLEV_CERTS.csv
+│   └── ICIS-AIR_VIOLATION_HISTORY.csv
+├── afs_downloads/
+│   ├── AFS_ACTIONS.csv
+│   ├── AFS_AIR_PRG_HIST_COMPLIANCE.csv
+│   ├── AFS_FACILITIES.csv
+│   ├── AFS_HPV_HISTORY.csv
+│   └── AIR_PROGRAM.csv
+├── PIPELINE_CAA_00_COMPLETE.csv
+└── POLL_RPT_COMBINED_EMISSIONS.csv
+```
 
-1. Download all data files from ECHO (URLs above) and place them in the appropriate subdirectories under `data/raw/` (see the Dataset List above).
-2. Install the required R packages (see Software Requirements). From R:
-   `install.packages(c("here","readr","dplyr","tidyr","lubridate","ggplot2","scales","patchwork","openxlsx"))`
-3. Optionally regenerate outputs. From a terminal at the repository root, run `Rscript scripts/00_run_all.R` (or open the project in RStudio and source `scripts/00_run_all.R`). This checks dependencies and writes a version record to `output/sessionInfo.txt`. To also regenerate the exploratory CSVs and data-dictionary workbooks, set `run_exploration` / `run_tables` to `TRUE` near the top of `00_run_all.R`.
-4. Scripts can also be run individually; each is self-contained and resolves its own paths via `here::here()` — there is no `setwd()` to edit.
+Primary download pages:
 
-## List of Tables and Programs
+- [ICIS-Air downloads](https://echo.epa.gov/tools/data-downloads/icis-air-download-summary)
+- [ECHO data downloads, including AFS and emissions](https://echo.epa.gov/tools/data-downloads)
+- [FRS downloads](https://echo.epa.gov/tools/data-downloads/frs-download-summary)
 
-This project is in the exploratory phase. Scripts produce summary CSVs and notes files, not final paper tables. Per-dataset exploration outputs live under `output/explore/`.
+Historical ICIS-Air snapshots may also be stored in `data/raw/wayback_snapshots/`. They are present in the working data archive but are not used by the active scripts described below.
 
-## References
+### 3. Run the desired workflow
 
-U.S. Environmental Protection Agency. *ICIS-Air Data Downloads.* Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads/icis-air-download-summary
+Run the dependency check and save an R session record:
 
-U.S. Environmental Protection Agency. *AFS Data Downloads.* Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads#afs
+```bash
+Rscript scripts/00_run_all.R
+```
 
-U.S. Environmental Protection Agency. *Combined Emissions Data Downloads.* Enforcement and Compliance History Online (ECHO). https://echo.epa.gov/tools/data-downloads#emissions
+By default, `00_run_all.R` does not rebuild the slower exploratory or Excel outputs. Set `run_exploration` and/or `run_tables` to `TRUE` near the top of that script to run those groups.
 
-U.S. Environmental Protection Agency. *AFS Data Download Summary.* https://echo.epa.gov/system/files/AFS_Data_Download.pdf
+Build the current Title V electric-utility panel skeleton separately:
+
+```bash
+Rscript scripts/01_titlev_utility_panel_skeleton.R
+```
+
+Individual scripts can also be run directly, for example:
+
+```bash
+Rscript scripts/explore/05_explore-formal-actions.R
+Rscript scripts/tables/09_table-formal-actions.R
+```
+
+## Repository guide
+
+| Folder | What is there | How to use it |
+|---|---|---|
+| `data/raw/` | Local, immutable EPA downloads. The contents are ignored by Git. | Download and unzip source data here using the filenames above. Scripts read from this folder but should never modify it. |
+| `data/frs_downloads/` | Large local FRS files, also ignored by Git. | Put `FRS_PROGRAM_LINKS.csv` here before running `scripts/explore/10_frs-crosswalk.R`. |
+| `data/derived/` | Analysis-ready files created from raw inputs. | Read these in later analysis scripts. Rebuild the Title V files with `scripts/01_titlev_utility_panel_skeleton.R`; do not edit generated CSVs by hand. |
+| `scripts/` | Entry points for reproducibility and the current panel build. | Start with `00_run_all.R`; run `01_titlev_utility_panel_skeleton.R` independently for the utility panel. |
+| `scripts/explore/` | Dataset-specific profiling and the FRS crosswalk. | Run individual scripts while learning or checking a raw dataset, or enable `run_exploration` in `00_run_all.R`. Outputs go to `output/explore/`. |
+| `scripts/tables/` | Builders for formatted Excel data dictionaries plus a workbook cross-check. | Run an individual `09_table-*.R` file or enable `run_tables` in `00_run_all.R`. Run `10_crosscheck-tables.R` afterward to compare supported workbooks with frozen references. |
+| `scripts/plots/` | Reserved for plot-building code. | Currently empty; the tracked files in `output/plots/` are historical outputs and do not have active generator scripts here. |
+| `output/explore/` | CSV summaries, tabulations, missingness checks, notes, and FRS crosswalk outputs. | Inspect these for data structure and quality findings. They are descriptive outputs, not final research results. |
+| `output/tables/` | Generated `.xlsx` data dictionaries. | Open these for compact descriptions of raw-table fields and distributions. `backup_hardcoded/` contains frozen, hand-checked workbooks used by the cross-check script. |
+| `output/plots/` | Existing diagnostic figures. | Treat these as historical artifacts unless and until their generating scripts are restored. |
+| `output/retired/` | Superseded exploratory summaries and synthesis notes. | Use only for project history or comparison. Do not treat this folder as the current pipeline. |
+| `docs/clean_air_act_info/` | PDF overviews of the CAA and EPA emissions programs. | Use as background reading on the regulatory setting and source programs. |
+| `docs/data_information/data_briefs/` | Short PDF briefs on ICIS-Air and pipeline data. | Use for dataset orientation before working with the raw files. |
+| `docs/data_information/data_dictionaries/` | PDF data dictionaries for AFS, ICIS-Air, and pipeline data. | Use as static reference documentation; the Excel summaries in `output/tables/` are more dataset-specific. |
+| `docs/literature/` | Project literature, currently including Shimshack (2014). | Use for research context. This is not an exhaustive bibliography. |
+
+The repository also contains a local `.secrets/` directory for credentials used outside the active scripts. It is ignored by Git and should never be committed.
+
+## Active scripts and outputs
+
+### Project runner
+
+`scripts/00_run_all.R`
+
+- checks that the declared R packages are installed;
+- optionally runs every script in `scripts/explore/`;
+- optionally runs every `scripts/tables/09_table-*.R` builder; and
+- writes `output/sessionInfo.txt`.
+
+The optional groups are off by default. The runner does not call the Title V panel script or the table cross-check.
+
+### Title V electric-utility panel
+
+`scripts/01_titlev_utility_panel_skeleton.R`
+
+This standalone script identifies major-emissions electric utilities using NAICS `2211` or SIC `4911`, then keeps facilities with at least one recorded regulatory interaction in every year from 2015 through 2025. Interactions include evaluations, violations, formal or informal actions, and Title V certifications.
+
+It writes:
+
+- `data/derived/titlev_utility_panel_skeleton.csv`: one row per retained facility-year, with activity flags;
+- `data/derived/titlev_utility_panel_facilities.csv`: one row per retained facility, with attributes and activity totals.
+
+The script builds a panel scaffold only. It does not yet construct final treatment, outcome, emissions, penalty, or violation-status variables. Its sample definition can be changed through `YEARS`, `NAICS_REGEX`, `SIC_CODES`, and `TITLEV_DEF` near the top of the file.
+
+`data/derived/pipeline_sample_rows.csv` is a small checked-in sample of the pipeline export; it is not generated by the panel script.
+
+### Exploratory profiles
+
+| Script | Main input | Output folder |
+|---|---|---|
+| `01_explore-facilities.R` | `ICIS-AIR_FACILITIES.csv` | `output/explore/facilities/` |
+| `02_explore-programs.R` | Programs and facilities | `output/explore/programs/` |
+| `03_explore-violations.R` | Violation history and facilities | `output/explore/violations/` |
+| `04_explore-compliance.R` | FCE/PCE evaluations and facilities | `output/explore/compliance/` |
+| `05_explore-formal-actions.R` | Formal actions and facilities | `output/explore/formal-actions/` |
+| `06_explore-informal.R` | Informal actions and facilities | `output/explore/informal/` |
+| `07_explore-pollutants.R` | Pollutants and facilities | `output/explore/pollutants/` |
+| `08_explore-stack-tests.R` | Stack tests and facilities | `output/explore/stack-tests/` |
+| `09_explore-pipeline.R` | ECHO pipeline plus related ICIS-Air tables | `output/explore/pipeline/` |
+| `10_frs-crosswalk.R` | AFS facilities, ICIS-Air facilities, and FRS program links | `output/explore/frs_crosswalk/` |
+
+The FRS crosswalk script is the only exploratory script that needs `data/frs_downloads/FRS_PROGRAM_LINKS.csv`. It maps legacy `AFS_ID` values to modern ICIS-Air `PGM_SYS_ID` values through `REGISTRY_ID`.
+
+### Excel data dictionaries
+
+The `scripts/tables/09_table-*.R` files create workbooks in `output/tables/` for:
+
+- five legacy AFS tables;
+- ICIS-Air facilities, programs, program subparts, compliance evaluations, violations, formal actions, informal actions, pollutants, stack tests, and Title V certifications;
+- combined emissions; and
+- the ECHO pipeline export.
+
+`scripts/tables/10_crosscheck-tables.R` compares generated workbooks against matching files in `output/tables/backup_hardcoded/`. Tables without a frozen backup are skipped.
+
+## Data model
+
+The main identifiers are:
+
+- `PGM_SYS_ID`: ICIS-Air source/program-system identifier and the primary join key across ICIS-Air tables;
+- `REGISTRY_ID`: FRS identifier used to link a physical facility across EPA systems;
+- `AFS_ID`: legacy AFS facility identifier.
+
+One `REGISTRY_ID` can be associated with multiple `PGM_SYS_ID` values, so it is important to choose deliberately between the physical-facility and air-source levels of analysis. The FRS crosswalk bridges AFS and ICIS-Air as:
+
+```text
+AFS_ID → REGISTRY_ID → PGM_SYS_ID
+```
+
+## Data availability and repository policy
+
+All source data used here are public EPA administrative data. No confidential or restricted records are required.
+
+Because the downloads are several gigabytes, `data/raw/` and `data/frs_downloads/` are excluded from version control. The repository tracks code, compact derived files, exploratory summaries, reference documentation, and selected generated workbooks. It also ignores `.DS_Store`, `.tex`, credential files, R history, and Excel lock files.
+
+Do not commit:
+
+- raw EPA downloads;
+- FRS bulk files;
+- `.secrets/` or other credentials;
+- `config/gsheet_config.R`; or
+- manually created temporary files.
+
+## Current limitations
+
+- The research question and final estimand are still under development.
+- The Title V utility output is a balanced panel skeleton, not a finished analysis dataset.
+- `00_run_all.R` requires manual flag changes to regenerate exploratory and table outputs.
+- Historical plots and retired outputs are tracked, but they are not part of the active reproducible workflow.
+- Raw-download dates are not recorded in a machine-readable manifest, so users should document the vintage of any newly downloaded EPA files.
+
+## License
+
+See [LICENSE](LICENSE).
