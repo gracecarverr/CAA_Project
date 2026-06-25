@@ -299,7 +299,7 @@ ecc_labels <- c(
   "A2" = "A2 - Major: actual <100, potential uncontrolled >100 tons/year",
   "B"  = "B - Minor: potential uncontrolled <100 tons/year",
   "SM" = "SM - Synthetic minor: below all major thresholds via enforceable limits",
-  "C"  = "C - Unknown",
+  "C"  = "C - Unregulated pollutant: actual/potential controlled emissions >100 tons/year",
   "UK" = "UK - Unknown",
   "ND" = "ND - Thresholds not defined"
 )
@@ -372,7 +372,14 @@ ecs_labels <- c(
   "F" = "F - HPV On Schedule (auto)",
   "G" = "G - FRV On Schedule (auto)",
   "H" = "H - In Compliance (auto)",
-  "M" = "M - In Compliance, CEMs"
+  "M" = "M - In Compliance, CEMs",
+  "A" = "A - Unknown re Procedural Compliance",
+  "B" = "B - In Violation re Both Emissions and Procedural Compliance",
+  "C" = "C - In Compliance With Procedural Requirements",
+  "P" = "P - Present, See Other Program(s)",
+  "U" = "U - Unknown by Evaluation Calculation",
+  "W" = "W - In Violation re Procedural Compliance",
+  "Y" = "Y - Unknown re Both Emissions and Procedural Compliance"
 )
 ecs_descs <- ifelse(
   as.character(ecs$EPA_COMPLIANCE_STATUS) %in% names(ecs_labels),

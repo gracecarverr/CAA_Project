@@ -274,7 +274,14 @@ hcs_labels <- c(
   "8" = "8 - No Applicable State Regulation", "9" = "9 - In Compliance, Shut Down",
   "D" = "D - HPV Violation (auto)", "E" = "E - FRV Violation (auto)",
   "F" = "F - HPV On Schedule (auto)", "G" = "G - FRV On Schedule (auto)",
-  "H" = "H - In Compliance (auto)", "M" = "M - In Compliance, CEMs"
+  "H" = "H - In Compliance (auto)", "M" = "M - In Compliance, CEMs",
+  "A" = "A - Unknown re Procedural Compliance",
+  "B" = "B - In Violation re Both Emissions and Procedural Compliance",
+  "C" = "C - In Compliance With Procedural Requirements",
+  "P" = "P - Present, See Other Program(s)",
+  "U" = "U - Unknown by Evaluation Calculation",
+  "W" = "W - In Violation re Procedural Compliance",
+  "Y" = "Y - Unknown re Both Emissions and Procedural Compliance"
 )
 hcs_descs <- ifelse(
   as.character(hcs$HISTORICAL_COMPLIANCE_STATUS) %in% names(hcs_labels),
